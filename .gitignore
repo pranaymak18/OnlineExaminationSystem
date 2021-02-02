@@ -1,0 +1,10 @@
+server/.env
+
+.env
+
+server/node_modules
+
+# Ignore all text files
+*.txt
+
+server/test.http
