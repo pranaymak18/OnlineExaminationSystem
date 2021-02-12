@@ -8,3 +8,5 @@ server/node_modules
 *.txt
 
 server/test.http
+
+client/web-app/.eslintcache
