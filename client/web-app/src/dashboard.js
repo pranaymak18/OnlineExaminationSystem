@@ -25,6 +25,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import HourglassEmptySharpIcon from '@material-ui/icons/HourglassEmptySharp';
 import DoneSharpIcon from '@material-ui/icons/DoneSharp';
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Image, Modal } from 'react-bootstrap';
 const drawerWidth = 240;
@@ -231,16 +232,35 @@ export default class dashboard extends React.Component {
             .catch((err) => console.log(err))
     }
 
+    logoutReq = () => {
+        this.handleDrawerClose();
+        const session = false;
+        Axios.get("http://localhost:5000/app/logout", {session})
+            .then((res) => {
+                
+                this.props.history.push('./admin')
+            })
+            .catch((err) => console.log(err))
+    }
+
     pendingReq = () => {
         this.handleDrawerClose();
         Axios.get('http://localhost:5000/app/dashboard')
             .then((res) => {
+                if(res.data.error){
+                    alert(res.data.error)
+                    this.props.history.push('./admin')
+                    
+
+                }
+                else{
                 let values = res.data;
                 let details = [];
                 this.setState({
                     userDetails: values,
                     currentView: 'pending'
                 })
+            }
             })
             .catch((err) => console.log(err));
     }
@@ -317,10 +337,21 @@ export default class dashboard extends React.Component {
                         <IconButton
                             edge="start"
                             color="inherit"
-                            aria-label="Accepted Requests"
+                            aria-label="Rejected Requests"
                             onClick={this.rejectedReq}
                         >
                             <CloseSharpIcon />Rejected
+                        </IconButton>
+                    </List>
+                    <Divider />
+                    <List>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="Show Pending Requests"
+                            onClick={this.logoutReq}
+                        >
+                            <ExitToAppIcon />Logout
                         </IconButton>
                     </List>
                 </Drawer>

@@ -28,7 +28,8 @@ export default class admin extends React.Component {
             if ((this.state.password.length > 5)) {
                 let admin_users = {
                     email: this.state.email,
-                    password: this.state.password
+                    password: this.state.password,
+                    status: true
                 };
                 Axios.post('http://localhost:5000/app/signin',  {admin_users} )
                     .then(response => {                        
@@ -38,6 +39,7 @@ export default class admin extends React.Component {
                         else {
                             alert(response.data.statusMessage);
                             // Cookies.set(this.state.email, this.state.passwd, {expires: 1});
+                            
                             this.props.history.push('./dashboard')
                             this.State = {
                                 email: '',

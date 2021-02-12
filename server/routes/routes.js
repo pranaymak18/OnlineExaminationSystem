@@ -13,7 +13,7 @@ router.use(bodyParser.json());
 const dotenv = require('dotenv');
 dotenv.config()
 
-
+let ses = false;
 
 router.post('/signup',(request,response,next)=>{
     signUpTemplateCopy.countDocuments({ email: request.body.email }, (err, cnt) => {        
@@ -54,6 +54,8 @@ router.post('/signup',(request,response,next)=>{
 
 router.post('/signin', (req, res, next) => {
     
+    console.log("/signin ses: "+ses)
+    
     console.log(req.body.admin_users.email + " "+req.body.admin_users.password)
     //{  $and: [{ email: { $eq: req.body.admin_users.email } }, { password: { $eq: req.body.admin_users.password } }] }
     var query = users.find({  $and: [{ email: { $eq: req.body.admin_users.email } }, { password: { $eq: req.body.admin_users.password } }] } );
@@ -69,6 +71,7 @@ router.post('/signin', (req, res, next) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json({ "statusMessage": "Login Successful", "role": someValue[0].role, "email": someValue[0].email, "orgId": someValue[0].orgId});
+                ses=req.body.admin_users.status;
             }
             else {
                 res.status(401).send({ error: 'Incorrect Credentials' });
@@ -80,6 +83,10 @@ router.post('/signin', (req, res, next) => {
 router.get("/dashboard",(req, res) => {
         // let cookie = Cookies.get()
         // console.log(cookie)
+        console.log("/dasboard ses: "+ ses)
+        if(ses === true)
+        {
+            
         signUpTemplateCopy.find({ "status": "pending" })
             .then((values) => {
                 res.statusCode = 200;
@@ -87,6 +94,9 @@ router.get("/dashboard",(req, res) => {
                 res.json(values);
             })
             .catch((err) => res.status(503).send({ error: "Server Unable to Process Data" }));
+        }
+        else
+            res.send({error: "login first"})
     });
 
 
@@ -227,6 +237,13 @@ router.get("/dashboard",(req, res) => {
 
     });
 
+    router.get("/logout",function(req,res){
+        ses = false;
+        console.log("/logout ses: "+ses)
+        res.send("loging out")
+
+    })
+
     router.post("/contact",function(request, response) {
         
         let transport = nodemailer.createTransport({
@@ -270,6 +287,8 @@ router.get("/dashboard",(req, res) => {
         }
     })
 })
+
+
 
 
 module.exports = router
