@@ -1,0 +1,52 @@
+.login-form{
+    width: 100%;
+    max-width: 730px;
+    padding: 15px;
+    margin: auto;
+    height: 100%;
+}
+#ir{
+    width: 30%;
+    margin-left:0;    
+}
+#pr {    
+    background-image: url("./DSKTP.jpg");
+    background-repeat: no-repeat, repeat; 
+    background-size: cover;
+    padding-bottom: 4px;  
+    padding-top: 6px; 
+    padding-left: 2px; 
+    background: contain;
+    width: 100%;
+    height: 350px;;
+}
+
+.jumbotron h1,p {
+    
+    color: rgb(19, 17, 17);
+}
+/*
+.img-text-wrapper {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+.subtitle {
+    transition: 1s ease-in-out;
+    color: transparent;
+}
+.img-text-wrapper:hover .subtitle {
+    color: steal;
+    font-weight: 400;
+}
+.logo-wrapper img {
+    width: 50%;
+    margin-bottom: 20px;
+}*/

@@ -158,7 +158,9 @@ router.get("/dashboard",(req, res) => {
                                         from: 'soes@gmail.com',
                                         to: req.body.details.email,
                                         subject: 'Application Accepted',
-                                        text: `Your Organization has been successfully registered with our service. Here is your ID  ${req.body.details.email} and temporary password ${password} `
+                                        text: `Your Organization has been successfully registered with our service. Here is your ID  ${req.body.details.email} and temporary password ${password} `,
+                                        html: `<html><head><style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 50%;}td, th { border: 1px solid #dddddd;text-align: left;padding: 8px;} tr:nth-child(even) {background-color: #dddddd;}</style></head><body><div><h1>Your Organization has been successfully registered with our service.</h1><br> <p style="color:red;">Your login details is provided below:</p></div><table> <tr><th>Username</th><th>Password</th><th>Suggestion</th></tr><tr><td>${req.body.details.email}</td><td>${password}</td><td>${req.body.details.textarea}</td></tr></html>`
+                                    
                                     }
                                     transporter.sendMail(mailOptions, (err, info) => {
                                         if (err) {
@@ -210,7 +212,9 @@ router.get("/dashboard",(req, res) => {
             from: 'soes@gmail.com',
             to: req.body.details.email,
             subject: 'Application Rejected', 
-            text: `Your application has been Rejected. You may have uploaded incorrect files. Please upload correct documents for verification.`
+            text: `Your application has been Rejected. You may have uploaded incorrect files. Please upload correct documents for verification.`,
+            html: `<html><head><style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 50%;}td, th { border: 1px solid #dddddd;text-align: left;padding: 8px;} tr:nth-child(even) {background-color: #dddddd;}</style></head><body><p>Your application has been Rejected. You may have uploaded incorrect files. Please upload correct documents for verification.</p><table><tr><th>Suggestion</th></tr><tr><td style="color:red;">${req.body.details.textarea}</td></tr></table></body></html>`
+
         }
         transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
