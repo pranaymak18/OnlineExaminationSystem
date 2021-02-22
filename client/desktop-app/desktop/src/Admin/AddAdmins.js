@@ -25,7 +25,7 @@ class AddAdmins extends Component {
 
 
 
-    /*componentDidMount() {
+    componentDidMount() {
         let temp = document.cookie.split("; ");
         let email = temp[0].split("=")[1];
         let role = temp[1].split("=")[1];
@@ -37,7 +37,7 @@ class AddAdmins extends Component {
                 orgId : orgId
             }
         });
-    }*/
+    }
 
 
     addAdmins = () => {
@@ -57,7 +57,7 @@ class AddAdmins extends Component {
             });
         }
         var self = this;
-        axios.post('http://localhost:5000/addUser', {
+        axios.post('http://localhost:5000/app/addUser', {
             users: reqBody
         })
             .then(function (response) {

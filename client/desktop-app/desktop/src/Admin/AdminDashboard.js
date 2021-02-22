@@ -4,12 +4,12 @@ import { Breadcrumb, BreadcrumbItem, Jumbotron } from 'reactstrap';
 import { Link } from 'react-router-dom';
 // import Cookies from 'js-cookie';
 class AdminDashboard extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         sample : ""
-    //     }
-    // }
+    constructor(props) {
+         super(props);
+         this.state = {
+            sample : ""
+        }
+    }
     // componentDidMount() {
         
     // }
