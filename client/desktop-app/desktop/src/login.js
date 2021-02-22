@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React ,{ Component } from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button, Form, FormGroup, Label, Input, Jumbotron, Media } from 'reactstrap';
@@ -7,15 +7,16 @@ import './login.css';
 import logo from './1.png';
 import { Stream } from 'stream';
 import history from './history';
+import { Redirect, withRouter } from 'react-router-dom';
 //const fs = require("electron").remote.require("fs")
 const electron = window.require("electron")
 const axios = require('axios');
 const shell = window.require('electron').shell;
-//window.require('electron-cookies');
+// require('electron-cookies');
 const path = require('path');
-//const fs = require('fs');
+const fs = require('fs');
 /*global Android*/
-class Login extends Component {
+export default class Login extends Component {
 
     constructor(props) {
         super(props);
@@ -23,12 +24,19 @@ class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleUrlRedirect = () => () => {
-        //shell.beep();
-        //shell.openExternal('https://github.com');
+    state = {
+        toAdminDashboard: false,
+        toFacultyDashboard: false,
+        toStudentDashboard: false,
+      }
+
+    handleUrlRedirect = (url) => () => {
+        shell.beep();
+        shell.openExternal(url);
     }
 
     handleSubmit = (event) => {
+        
         event.preventDefault();
         let email1 = document.getElementById("email").value;
         let password1 = document.getElementById("password").value;
@@ -42,34 +50,47 @@ class Login extends Component {
                 
             let admin_users = {
                 email: email1,
-                passwd: password1
+                password: password1,
+                
             };
             
-            axios.post("http://localhost:5000/signin", {admin_users})
+            axios.post("http://localhost:5000/app/signin", {admin_users})
             .then((data) => {
+                
                 if(data.data.role==="admin") {
+                    
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
-                    history.push('/admin');
+                    //this.context.history.push('/admin');
+                    //history.push("/admin"); 
+                    this.setState(() => ({
+                       toAdminDashboard: true
+                    }))
                 } else if(data.data.role==="student") {
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
-                    history.push("/student");
+                    history.push("/student");  
+                    this.setState(() => ({
+                        toStudentDashboard: true
+                    })) 
                 } else if(data.data.role==="faculty") {
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
                     history.push("/faculty");
+                    this.setState(() => ({
+                        toFacultyDashboard: true
+                    }))
                 } else {
                     alert("You are super admin use your web portal for login");
                 }
-            })
-            .catch((err) => {
+            }).catch((err) => {
                 console.log(err);
                 alert("Sorry, email and password are incorrect!");
             });
+           
 
 
             } else {
@@ -79,6 +100,10 @@ class Login extends Component {
   }
 
     render() {
+        if (this.state.toAdminDashboard === true) {
+            return <Redirect to='/admin' />
+          }
+         
         return (
             <>
             <div id="pr">
@@ -100,11 +125,11 @@ class Login extends Component {
                 <hr id="ir"></hr>
                 <p>Login to Continue...</p>
                 <p className="lead">
-                <Button color="primary" onClick={this.handleUrlRedirect()} >Learn More</Button>
+                <Button color="primary" onClick={this.handleUrlRedirect('http://localhost:3002/')} >Learn More</Button>
                 </p>
             </Jumbotron>
             </div>
-            <Form className="login-form" onSubmit={this.handleSubmit}>
+            <Form className="login-form" onSubmit={this.handleSubmit.bind(this)}>
                 <FormGroup>
                     <Label>Email</Label>
                     <Input type="email" placeholder="Email" id="email"/>
@@ -116,14 +141,13 @@ class Login extends Component {
                 <FormGroup>
                     <Button className="btn-lg btn-dark btn-block">Log In</Button>
                 </FormGroup>
-                <div className="text-center">
-                    <a href="https://www.google.com/">Sign Up</a>
-                    <spam className="p-2"> | </spam>
-                    <a href="/forgot.js">Forgot Password</a>
-                </div>
             </Form>
+                <div className="text-center">
+                    <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3002/signup')}>Sign Up</Button>
+                    <spam className="p-2"> | </spam>
+                    <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3002/signup')}>Forgot Password</Button>
+                </div>
             </>
         )
     }
 }
-export default Login;

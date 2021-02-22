@@ -33,6 +33,7 @@ export default class ShowModalCase extends React.Component {
                     this.setState({
                         textarea: ''
                     });
+                    window.location.reload(); 
                 })
                 .catch((err) => {
                     alert(err.response.data.error);
@@ -45,6 +46,7 @@ export default class ShowModalCase extends React.Component {
                     this.setState({
                         textarea: ''
                     });
+                    window.location.reload(); 
                 })
                 .catch((err) => {
                     alert(err.response.data.error);
