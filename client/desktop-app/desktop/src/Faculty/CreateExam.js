@@ -17,9 +17,11 @@ class CreateExam extends Component {
             showMessage: "none",
             message: "",
             cookie: "",
+            name:"",
         }
         this.fileHandler = this.fileHandler.bind(this);
         this.createExam = this.createExam.bind(this);
+        this.onChangeValue= this.onChangeValue.bind(this);
     }
 
     /*componentDidMount() {
@@ -35,7 +37,30 @@ class CreateExam extends Component {
             }
         });
     }*/
-
+    onChangeValue = (event) => {
+        //alert(event.target.value);
+        if(event.target.value==="mcq")
+        {
+            //alert(event.target.value);
+            this.setState({
+                name : event.target.value
+            })
+        }
+        if(event.target.value==="written")
+        {
+            //alert(event.target.value);
+            this.setState({
+                name : event.target.value
+            })
+        }
+        if(event.target.value==="both")
+        {
+            //alert(event.target.value);
+            this.setState({
+                name : event.target.value
+            })
+        }
+    }
     createExam = () => {
         
         let formURL = document.getElementById("formLink").value;
@@ -138,7 +163,26 @@ class CreateExam extends Component {
                         </tbody>
                     </Table>
                     {/* <Button  onClick={() => this.createExam()} size="lg">Create Exam</Button>{' '} */}
-                    
+                    <div style={{ borderStyle: "inset", height : "80px", background: "#4863A0"}} onChange={this.onChangeValue}>
+                        <center><h3 style={{color:"White" , paddingLeft:"70px"}}>Select a Exam Type</h3>
+                        <h4 style={{color:"White"}}>
+                        <input type="radio" value="mcq" name="mcq"  /> MCQ Exam
+                        <span style={{ marginLeft :"20px", marginRight : "20px" }}>|</span>
+                        <input type="radio" value="written" name="mcq"  /> Written Exam
+                        <span style={{ marginLeft :"20px", marginRight : "20px" }}>|</span>
+                        <input type="radio" value="both" name="mcq"  /> Both
+                        </h4>
+                        </center>
+                    </div>
+                    <br />
+                    {/*Upload PDF File
+                    <div style={{ borderStyle: 'solid', borderColor:"#F5F5F5" ,padding:"10px" , borderRadius:"5px"  }}>
+                   
+                    <FormGroup>
+                        <Input type="file" name="pdf" id="pdf" placeholder="UPLOAD PDF FILE" required/>
+                    </FormGroup>
+                    </div>
+                    <br />
                     <FormGroup>
                         <Label for="formLink">Form Link</Label>
                         <Input type="url" name="formLink" id="formLink" placeholder="form link" required/>
@@ -169,11 +213,139 @@ class CreateExam extends Component {
                         />
                         <p style={{ display: this.state.showMessage }}>{this.state.message}</p>
                     </center>
-                   
+                    */}
 
                 </div>
             );
         }
+
+        if(this.state.name==="mcq")
+        {
+            displayUploadedData.push(
+            <div>
+            <FormGroup>
+                        <Label for="formLink">Form Link</Label>
+                        <Input type="url" name="formLink" id="formLink" placeholder="form link" required/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="subjectName">Subject Name</Label>
+                        <Input type="text" name="subjectName" id="subjectName" placeholder="subject name" required/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="examDate">Exam Date</Label>
+                        <Input type="date" name="examDate" id="examDate" placeholder="exam date" required/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="duration">Duration</Label>
+                        <Input type="number" step="0.01" name="duration" id="duration" placeholder="duration" required/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="description">Description(Optional)</Label>
+                        <Input type="text" name="description" id="description" placeholder="description" />
+                    </FormGroup>
+                    <center><Button color="success" onClick={() => this.createExam()} size="lg" color="primary">Create Exam</Button></center>
+                    
+                    <center>
+                        <ClipLoader
+                            size={50}
+                            color={"#123abc"}
+                            loading={this.state.showSpinner}
+                        />
+                        <p style={{ display: this.state.showMessage }}>{this.state.message}</p>
+                    </center>
+            </div>
+            );
+        }
+
+        if(this.state.name==="written")
+        {
+            displayUploadedData.push(
+            <div>
+                    Upload PDF File
+                    <div style={{ borderStyle: 'solid', borderColor:"#F5F5F5" ,padding:"10px" , borderRadius:"5px"  }}>
+                    <FormGroup>
+                        <Input type="file" name="pdf" id="pdf" placeholder="UPLOAD PDF FILE" required/>
+                    </FormGroup>
+                    </div>
+                    <br />
+                    <FormGroup>
+                        <Label for="subjectName">Subject Name</Label>
+                        <Input type="text" name="subjectName" id="subjectName" placeholder="subject name" required/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="examDate">Exam Date</Label>
+                        <Input type="date" name="examDate" id="examDate" placeholder="exam date" required/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="duration">Duration</Label>
+                        <Input type="number" step="0.01" name="duration" id="duration" placeholder="duration" required/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="description">Description(Optional)</Label>
+                        <Input type="text" name="description" id="description" placeholder="description" />
+                    </FormGroup>
+                    <center><Button color="success" onClick={() => this.createExam()} size="lg" color="primary">Create Exam</Button></center>
+                    
+                    <center>
+                        <ClipLoader
+                            size={50}
+                            color={"#123abc"}
+                            loading={this.state.showSpinner}
+                        />
+                        <p style={{ display: this.state.showMessage }}>{this.state.message}</p>
+                    </center>
+            </div>
+            );
+
+            
+        }
+
+        if(this.state.name==="both")
+            {
+                displayUploadedData.push(
+                <div>
+                        
+                        <br />
+                        <FormGroup>
+                            <Label for="formLink">Form Link</Label>
+                            <Input type="url" name="formLink" id="formLink" placeholder="form link" required/>
+                        </FormGroup>
+                        Upload PDF File
+                        <div style={{ borderStyle: 'solid', borderColor:"#F5F5F5" ,padding:"10px" , borderRadius:"5px"  }}>
+                        <FormGroup>
+                            <Input type="file" name="pdf" id="pdf" placeholder="UPLOAD PDF FILE" required/>
+                        </FormGroup>
+                        </div>
+                        <br />
+                        <FormGroup>
+                            <Label for="subjectName">Subject Name</Label>
+                            <Input type="text" name="subjectName" id="subjectName" placeholder="subject name" required/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="examDate">Exam Date</Label>
+                            <Input type="date" name="examDate" id="examDate" placeholder="exam date" required/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="duration">Duration</Label>
+                            <Input type="number" step="0.01" name="duration" id="duration" placeholder="duration" required/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="description">Description(Optional)</Label>
+                            <Input type="text" name="description" id="description" placeholder="description" />
+                        </FormGroup>
+                        <center><Button color="success" onClick={() => this.createExam()} size="lg" color="primary">Create Exam</Button></center>
+                        
+                        <center>
+                            <ClipLoader
+                                size={50}
+                                color={"#123abc"}
+                                loading={this.state.showSpinner}
+                            />
+                            <p style={{ display: this.state.showMessage }}>{this.state.message}</p>
+                        </center>
+                </div>
+                );
+            }
         return (
             <Fragment>
                 <div className="wrapper">
@@ -190,13 +362,14 @@ class CreateExam extends Component {
                             <div>
                                 <h2>Follows the steps to create exam</h2>
                                 <p style={{ fontSize: 15 }}>
-                                    1. Download the sample excel file<br />
+                                    1. Download the sample excel file to add a student for exam<br />
                                     2. Edit the downloaded file as per the file formats<br />
                                     3. Upload the final file<br />
-                                    4. Create a google form <a onClick={() => shell.openExternal("http://forms.google.com/")} className="article"> CLICK HERE</a><br />
+                                    4. Create a google form for MCQ type examination <a onClick={() => shell.openExternal("http://forms.google.com/")} className="article"> CLICK HERE</a><br />
                                     5. Add the form link below<br />
-                                    6. Hit Genearte Exam<br />
-                                    7. Wait for sometime until exam created...<br />
+                                    6. Upload a PDF file for written examination.<br />
+                                    7. Hit Genearte Exam<br />
+                                    8. Wait for sometime until exam created...<br />
                                 </p>
                             </div>
                         </Jumbotron>

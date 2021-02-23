@@ -14,7 +14,7 @@ import DisplayFaculties from './Admin/DisplayFaculties';
 import FacultyDashboard from './Faculty/FacultyDashboard';
 import ViewExams from './Faculty/ViewExam';
 import CreateExam from './Faculty/CreateExam';
-//import AddFaculties from './Admin/AddFaculties';
+
 
 
 ReactDOM.render(
