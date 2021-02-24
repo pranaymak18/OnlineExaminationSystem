@@ -1,29 +1,29 @@
 import React, { Component, Fragment } from 'react';
-import FacultyHeader from './Header';
+import StudentHeader from './Header';
 import { Breadcrumb, BreadcrumbItem, Jumbotron } from 'reactstrap';
 import { Link } from 'react-router-dom';
-class FacultyDashboard extends Component {
+class StudentDashboard extends Component {
     render() {
         return (
             <Fragment>
                 <div className="wrapper">
-                    <FacultyHeader />
+                <StudentHeader />
                     <div id="content">
                         <div className="row">
                             <Breadcrumb>
                                 <BreadcrumbItem><Link to="/"><i className="fa fa-home fa-sm"></i> Home</Link></BreadcrumbItem>
-                                <BreadcrumbItem active> Faculty</BreadcrumbItem>
+                                <BreadcrumbItem active> Student</BreadcrumbItem>
                             </Breadcrumb>
                             <div className="col-12">
-                                <h3>Faculty Dashboard</h3>
+                                <h3>Student Dashboard</h3>
                                 <hr />
                             </div>
                         </div>
                         <Jumbotron>
                             <div>
-                                <h1>Welcome.. Faculty</h1>
+                                <h1>Welcome.. Student</h1>
                                 <p>
-                                    Faculty can organize exams.
+                                    Student can give exams assigned by faculties.
                                 </p>
                             </div>
                         </Jumbotron>
@@ -34,4 +34,4 @@ class FacultyDashboard extends Component {
     }
 }
 
-export default FacultyDashboard;
+export default StudentDashboard;

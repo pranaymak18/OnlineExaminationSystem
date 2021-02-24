@@ -21,7 +21,7 @@ class AdminDashboard extends Component {
                     <div id="content">
                         <div className="row">
                             <Breadcrumb>
-                                <BreadcrumbItem><Link to="/home"><i className="fa fa-home fa-sm"></i> Home</Link></BreadcrumbItem>
+                                <BreadcrumbItem><Link to="/"><i className="fa fa-home fa-sm"></i> Home</Link></BreadcrumbItem>
                                 <BreadcrumbItem active> Admin</BreadcrumbItem>
                             </Breadcrumb>
                             <div className="col-12">

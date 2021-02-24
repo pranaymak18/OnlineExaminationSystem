@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import AdminDashboard from "./Admin/AdminDashboard"
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, withRouter } from "react-router-dom";
+import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import AddAdmins from './Admin/AddAdmins';
 import AddFaculties from './Admin/AddFaculties';
 import AddStudent from './Admin/AddStudents';
@@ -14,6 +14,10 @@ import DisplayFaculties from './Admin/DisplayFaculties';
 import FacultyDashboard from './Faculty/FacultyDashboard';
 import ViewExams from './Faculty/ViewExam';
 import CreateExam from './Faculty/CreateExam';
+import ViewExamss from './Student/ViewExam';
+import StudentDashboard from './Student/StudentDashboard';
+import NotFound from './NotFound';
+import Pdf from './Student/Written';
 
 
 
@@ -21,7 +25,8 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
         <div className="App">
-          <Route path="/" exact component={ App } />
+          <Switch>
+          <Route path="/" exact component={ Pdf } />
           <Route path="/admin" exact component={ AdminDashboard } />
           <Route path="/admin/admins" exact component={AddAdmins} />
           <Route path="/admin/faculties" exact component={AddFaculties} />
@@ -29,8 +34,13 @@ ReactDOM.render(
           <Route path="/admin/display/admins" exact component={DIsplayAdmins} />
           <Route path="/admin/display/students" exact component={DisplayStudents} />
           <Route path="/admin/display/faculties" exact component={DisplayFaculties} />
+          <Route path="/faculty" exact component={FacultyDashboard} />
           <Route path="/faculty/viewExam" exact component={ViewExams} />
           <Route path="/faculty/createExam" exact component={CreateExam} />
+          <Route path="/student" exact component={StudentDashboard} />
+          <Route path="/student/viewExam" exact component={ViewExamss} />
+          <Route path="/*" exact component={ NotFound } />
+          </Switch>
         </div>
       </BrowserRouter>
   </React.StrictMode>,
