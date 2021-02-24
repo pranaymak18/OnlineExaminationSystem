@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import ReactRoundedImage from "react-rounded-image";
-import MyPhoto from "../admin.png";
+import MyPhoto from "./Admin.png";
 
 export default function AdminHeader(props) {
     return (

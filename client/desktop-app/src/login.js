@@ -7,7 +7,7 @@ import './login.css';
 import logo from './1.png';
 import { Stream } from 'stream';
 import history from './history';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 //const fs = require("electron").remote.require("fs")
 const electron = window.require("electron")
 const axios = require('axios');
@@ -30,9 +30,9 @@ export default class Login extends Component {
         toStudentDashboard: false,
       }
 
-    handleUrlRedirect = () => () => {
-        //shell.beep();
-        //shell.openExternal('https://github.com');
+    handleUrlRedirect = (url) => () => {
+        shell.beep();
+        shell.openExternal(url);
     }
 
     handleSubmit = (event) => {
@@ -58,13 +58,15 @@ export default class Login extends Component {
             .then((data) => {
                 
                 if(data.data.role==="admin") {
-                    alert("Hi I am in admin")
+                    
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
-                     this.setState(() => ({
-                        toAdminDashboard: true
-                      }))
+                    //this.context.history.push('/admin');
+                    //history.push("/admin"); 
+                    this.setState(() => ({
+                       toAdminDashboard: true
+                    }))
                 } else if(data.data.role==="student") {
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
@@ -72,7 +74,7 @@ export default class Login extends Component {
                     history.push("/student");  
                     this.setState(() => ({
                         toStudentDashboard: true
-                      })) 
+                    })) 
                 } else if(data.data.role==="faculty") {
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
@@ -80,11 +82,14 @@ export default class Login extends Component {
                     history.push("/faculty");
                     this.setState(() => ({
                         toFacultyDashboard: true
-                      }))
+                    }))
                 } else {
                     alert("You are super admin use your web portal for login");
                 }
-            })
+            }).catch((err) => {
+                console.log(err);
+                alert("Sorry, email and password are incorrect!");
+            });
            
 
 
@@ -120,7 +125,7 @@ export default class Login extends Component {
                 <hr id="ir"></hr>
                 <p>Login to Continue...</p>
                 <p className="lead">
-                <Button color="primary" onClick={this.handleUrlRedirect()} >Learn More</Button>
+                <Button color="primary" onClick={this.handleUrlRedirect('http://localhost:3002/')} >Learn More</Button>
                 </p>
             </Jumbotron>
             </div>
@@ -136,12 +141,12 @@ export default class Login extends Component {
                 <FormGroup>
                     <Button className="btn-lg btn-dark btn-block">Log In</Button>
                 </FormGroup>
-                <div className="text-center">
-                    <a href="http://localhost:3001/">Sign Up</a>
-                    <spam className="p-2"> | </spam>
-                    <a href="/forgot.js">Forgot Password</a>
-                </div>
             </Form>
+                <div className="text-center">
+                    <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3002/signup')}>Sign Up</Button>
+                    <spam className="p-2"> | </spam>
+                    <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3002/signup')}>Forgot Password</Button>
+                </div>
             </>
         )
     }

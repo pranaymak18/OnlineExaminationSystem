@@ -22,7 +22,7 @@ class AddStudent extends Component {
         this.addStudents = this.addStudents.bind(this);
     }
 
-    /*componentDidMount() {
+    componentDidMount() {
         let temp = document.cookie.split("; ");
         let email = temp[0].split("=")[1];
         let role = temp[1].split("=")[1];
@@ -35,7 +35,7 @@ class AddStudent extends Component {
             }
         });
     }
-    */
+    
     addStudents = () => {
         this.setState({
             showSpinner: true,
@@ -53,7 +53,7 @@ class AddStudent extends Component {
             });
         }
         var self = this;
-        axios.post('http://localhost:5000/addUser', {
+        axios.post('http://localhost:5000/aap/addUser', {
             users: reqBody
         })
             .then(function (response) {

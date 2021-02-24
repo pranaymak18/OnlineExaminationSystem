@@ -1,39 +1,29 @@
 import React, { Component, Fragment } from 'react';
-import  AdminHeader from './Header';
+import StudentHeader from './Header';
 import { Breadcrumb, BreadcrumbItem, Jumbotron } from 'reactstrap';
 import { Link } from 'react-router-dom';
-// import Cookies from 'js-cookie';
-class AdminDashboard extends Component {
-    constructor(props) {
-         super(props);
-         this.state = {
-            sample : ""
-        }
-    }
-    // componentDidMount() {
-        
-    // }
+class StudentDashboard extends Component {
     render() {
         return (
             <Fragment>
                 <div className="wrapper">
-                    <AdminHeader />
+                <StudentHeader />
                     <div id="content">
                         <div className="row">
                             <Breadcrumb>
                                 <BreadcrumbItem><Link to="/"><i className="fa fa-home fa-sm"></i> Home</Link></BreadcrumbItem>
-                                <BreadcrumbItem active> Admin</BreadcrumbItem>
+                                <BreadcrumbItem active> Student</BreadcrumbItem>
                             </Breadcrumb>
                             <div className="col-12">
-                                <h3>Admin Dashboard</h3>
+                                <h3>Student Dashboard</h3>
                                 <hr />
                             </div>
                         </div>
                         <Jumbotron>
                             <div>
-                                <h1>Welcome.. Admin</h1>
+                                <h1>Welcome.. Student</h1>
                                 <p>
-                                    Admin can add students, faculties and other admins.
+                                    Student can give exams assigned by faculties.
                                 </p>
                             </div>
                         </Jumbotron>
@@ -44,4 +34,4 @@ class AdminDashboard extends Component {
     }
 }
 
-export default AdminDashboard;
+export default StudentDashboard;
