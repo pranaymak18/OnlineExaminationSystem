@@ -26,7 +26,7 @@ ReactDOM.render(
     <BrowserRouter>
         <div className="App">
           <Switch>
-          <Route path="/" exact component={ Pdf } />
+          <Route path="/" exact component={ App } />
           <Route path="/admin" exact component={ AdminDashboard } />
           <Route path="/admin/admins" exact component={AddAdmins} />
           <Route path="/admin/faculties" exact component={AddFaculties} />
