@@ -34,6 +34,7 @@ mainRouter.route("/students")
 });
 mainRouter.route("/admins")
     .get((req, res) => {
+        console.log("/admins")
         let query = user.find({"role" : "admin"});
         query.exec((err,data) => {
             if(err) {

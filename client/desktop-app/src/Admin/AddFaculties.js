@@ -53,7 +53,7 @@ class AddFaculties extends Component {
             });
         }
         var self = this;
-        axios.post('http://localhost:5000/app/addUser', {
+        axios.post('http://localhost:5000/addUser', {
             users: reqBody
         })
             .then(function (response) {

@@ -26,7 +26,7 @@ app.use(express.json())
 app.use(cors())
 app.use('/app', routesUrls)
 app.use("/addUser",addUsersRouter);
-app.use("/getUser",getUsersRouter);
+app.use("/getUsers",getUsersRouter);
 app.listen(5000, () => console.log("Server is running"))
 
 connectDB();
