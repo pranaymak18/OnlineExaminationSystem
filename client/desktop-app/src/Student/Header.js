@@ -15,8 +15,8 @@ export default function StudentHeader(props) {
                 </div>
                 <ul className="list-unstyled components">
                     <li><Link to="/student/viewExam">View Exams</Link></li>
-                    <li><Link to="/">View Result</Link></li>
-                    <li><Link to="/home">Logout</Link></li>
+                    <li><Link to="#">View Result</Link></li>
+                    <li><Link to="/">Logout</Link></li>
                 </ul>
             </nav>
         </Fragment>

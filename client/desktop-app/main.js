@@ -3,13 +3,14 @@ const path = require('path');
 const url = require('url');
 
 let mainWindow;
+
 function createWindow () {
   const startUrl = process.env.ELECTRON_START_URL || url.format({
     pathname: path.join(__dirname, '../index.html'),
     protocol: 'file:',
     slashes: true,
   });
-  mainWindow = new BrowserWindow({ webPreferences: { webSecurity: false, nodeIntegration: true } });
+  mainWindow = new BrowserWindow({ webPreferences: { webSecurity: false, nodeIntegration: true, enableRemoteModule: true } });
   //mainWindow.setMenu(null);
   
   mainWindow.maximize();

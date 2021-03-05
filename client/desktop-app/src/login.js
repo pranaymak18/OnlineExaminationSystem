@@ -103,6 +103,14 @@ export default class Login extends Component {
         if (this.state.toAdminDashboard === true) {
             return <Redirect to='/admin' />
           }
+
+          if (this.state.toFacultyDashboard === true) {
+            return <Redirect to='/faculty' />
+          }
+
+          if (this.state.toStudentDashboard === true) {
+            return <Redirect to='/student' />
+          }
          
         return (
             <>
@@ -125,7 +133,7 @@ export default class Login extends Component {
                 <hr id="ir"></hr>
                 <p>Login to Continue...</p>
                 <p className="lead">
-                <Button color="primary" onClick={this.handleUrlRedirect('http://localhost:3002/')} >Learn More</Button>
+                <Button color="primary" onClick={this.handleUrlRedirect('http://localhost:3001/')} >Learn More</Button>
                 </p>
             </Jumbotron>
             </div>
@@ -143,9 +151,9 @@ export default class Login extends Component {
                 </FormGroup>
             </Form>
                 <div className="text-center">
-                    <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3002/signup')}>Sign Up</Button>
+                    <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3001/signup')}>Sign Up</Button>
                     <spam className="p-2"> | </spam>
-                    <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3002/signup')}>Forgot Password</Button>
+                    <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3001/')}>Forgot Password</Button>
                 </div>
             </>
         )

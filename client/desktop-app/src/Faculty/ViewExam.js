@@ -14,7 +14,7 @@ class ViewExams extends Component {
             exams: ""
         }
     }
-    /*componentDidMount() {
+    componentDidMount() {
         let temp = document.cookie.split("; ");
         let email = temp[0].split("=")[1];
         let role = temp[1].split("=")[1];
@@ -48,7 +48,7 @@ class ViewExams extends Component {
             });
         })
     }
-    */
+    
     render() {
         let showExams = [];
         if (this.state.exams === "") {
