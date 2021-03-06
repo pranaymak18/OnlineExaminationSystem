@@ -9,7 +9,7 @@ import logout from './logout';
 import admin from './admin';
 import error from './error';
 import dashboard from './dashboard';
-
+import web from './scanner';
 class Start extends React.Component {
   render() {
     return (
@@ -19,6 +19,7 @@ class Start extends React.Component {
           <Route exact path={"/admin"} component={admin} />
           <Route exact path={"/signup"} component={signup} />
           <Route exact path={"/dashboard"} component={dashboard} />
+          <Route exact path={"/scanner/:email"} component={web} />
           <Route exact path={"/*"} component={error} />
         </Switch>
       </BrowserRouter>

@@ -18,8 +18,10 @@ import ViewExamss from './Student/ViewExam';
 import StudentDashboard from './Student/StudentDashboard';
 import NotFound from './NotFound';
 import Pdf from './Student/Written';
-
-
+import picker from './Student/picker';
+//import picker from './Student/app.jsx'; 
+//import './Student/style.css';
+import web from './Student/Website';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -35,10 +37,11 @@ ReactDOM.render(
           <Route path="/admin/display/students" exact component={DisplayStudents} />
           <Route path="/admin/display/faculties" exact component={DisplayFaculties} />
           <Route path="/faculty" exact component={FacultyDashboard} />
-          <Route path="/faculty/viewExam" exact component={ViewExams} />
+          <Route path="/faculty/viewExam" exact component={FacultyDashboard} />
           <Route path="/faculty/createExam" exact component={CreateExam} />
           <Route path="/student" exact component={StudentDashboard} />
           <Route path="/student/viewExam" exact component={ViewExamss} />
+          <Route path="/scanner" exact component={Pdf} />
           <Route path="/*" exact component={ NotFound } />
           </Switch>
         </div>

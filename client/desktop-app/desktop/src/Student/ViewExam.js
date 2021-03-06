@@ -3,6 +3,11 @@ import StudentHeader from './Header';
 import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom';
+const path = require('path');
+const url = require('url');
+
+const { remote , BrowserWindow , Menu } = window.require('electron');
+ 
 const fs = require("fs");
 const axios = require('axios');
 
@@ -20,16 +25,20 @@ class ViewExamss extends Component {
     }
 
     startExam(url) {
-        const remote = require('electron').remote;
+        //const remote = require('electron').remote;
         const BrowserWindow = remote.BrowserWindow;
         const win = new BrowserWindow({
           height: 600,
           width: 800,
           fullscreen : true,
-          alwaysOnTop: true
+          alwaysOnTop: true,
+          webPreferences: {  enableRemoteModule: true ,webSecurity: false, nodeIntegration: true } 
         });
-        win.loadURL(url);
-
+        win.setMenu(null);
+        //win.loadFile(startUrl);
+        win.loadURL('http://localhost:3000/scanner');
+        //alert('Hello');
+        /*
         let constraintObj = {
             audio: true,
             video: true
@@ -67,10 +76,10 @@ class ViewExamss extends Component {
                 }
 
             })
-
+*/
     }
     
-    /*componentDidMount() {
+    componentDidMount() {
         let temp = document.cookie.split(";");
         let email = temp[0].split("=")[1];
         let role = temp[1].split("=")[1];
@@ -106,7 +115,7 @@ class ViewExamss extends Component {
                 loader: false
             });
         })
-    }*/
+    }
 
     render() {
         let showExams = [];

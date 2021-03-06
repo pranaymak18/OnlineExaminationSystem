@@ -5,6 +5,9 @@ const dotenv = require('dotenv')
 const routesUrls = require('./routes/routes')
 const addUsersRouter = require('./routes/desktop-app/addUsers');
 const getUsersRouter = require('./routes/desktop-app/getUsers');
+const getOrgId = require('./routes/desktop-app/getOrgId');
+const createExam = require('./routes/desktop-app/createExam');
+const viewExam = require('./routes/desktop-app/viewExam');
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
@@ -16,6 +19,7 @@ const connectDB = async() => {
         useUnifiedTopology: true,
         useNewUrlParser: true, 
         useCreateIndex: true,
+        
 }, ()=> console.log('Database connected'))
 }
 
@@ -27,6 +31,9 @@ app.use(cors())
 app.use('/app', routesUrls)
 app.use("/addUser",addUsersRouter);
 app.use("/getUsers",getUsersRouter);
+app.use("/getOrgId", getOrgId);
+app.use("/createExam", createExam);
+app.use("/viewExam", viewExam);
 app.listen(5000, () => console.log("Server is running"))
 
 connectDB();

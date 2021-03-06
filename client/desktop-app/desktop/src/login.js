@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Button, Form, FormGroup, Label, Input, Jumbotron, Media } from 'reactstrap';
 import { deflate } from 'zlib';
 import './login.css';
-import logo from './1.png';
 import { Stream } from 'stream';
 import history from './history';
 import { Redirect, withRouter } from 'react-router-dom';
@@ -71,7 +70,7 @@ export default class Login extends Component {
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
-                    history.push("/student");  
+                    //history.push("/student");  
                     this.setState(() => ({
                         toStudentDashboard: true
                     })) 
@@ -103,7 +102,12 @@ export default class Login extends Component {
         if (this.state.toAdminDashboard === true) {
             return <Redirect to='/admin' />
           }
-         
+        if (this.state.toStudentDashboard === true) {
+            return <Redirect to='/student' />
+        }
+        if (this.state.toFacultyDashboard === true) {
+            return <Redirect to='/faculty' />
+        }
         return (
             <>
             <div id="pr">
