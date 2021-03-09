@@ -8,6 +8,7 @@ const fs = require('fs');
 const { MongoClient } = require('mongodb');
 const nodemailer = require('nodemailer');
 const generator = require('generate-password');
+const forms = require('./../models/ExamModels');
 
 router.use(bodyParser.json());
 const dotenv = require('dotenv');
@@ -246,6 +247,20 @@ router.get("/dashboard",(req, res) => {
         console.log("/logout ses: "+ses)
         res.send("loging out")
 
+    })
+
+    router.get("/pdf",function (req,res) {
+        let id = req.body.id;
+        console.log(id);
+        var query = forms.find({ "examId" : id  });
+        query.exec((err,data) => {
+            if(err) {
+                res.status(500);
+            } else {
+                console.log(data);
+                res.status(200).json({exam : data});
+            }
+        })
     })
 
     router.post("/contact",function(request, response) {

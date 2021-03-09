@@ -11,8 +11,6 @@ const { remote , BrowserWindow , Menu } = window.require('electron');
 const fs = require("fs");
 const axios = require('axios');
 
-
-
 class ViewExamss extends Component {
     constructor(props) {
         super(props);
@@ -35,8 +33,11 @@ class ViewExamss extends Component {
           webPreferences: {  enableRemoteModule: true ,webSecurity: false, nodeIntegration: true } 
         });
         win.setMenu(null);
-        //win.loadFile(startUrl);
-        win.loadURL('http://localhost:3000/scanner');
+        let data= this.state.exams[0].examId;
+
+        //alert(data);
+        //win.loadFile(url);
+        win.loadURL(`http://localhost:3000/scanner/${data}`);
         //alert('Hello');
         /*
         let constraintObj = {
