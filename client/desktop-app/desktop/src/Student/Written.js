@@ -113,6 +113,7 @@ export default class Pdf extends Component{
     {
       let temp = document.cookie.split(";");  
       let email = temp[0].split("=")[1];
+      alert(email);
       display.push(
         <div>
           <center>
