@@ -39,6 +39,7 @@ ReactDOM.render(
           <Route path="/faculty/createExam" exact component={CreateExam} />
           <Route path="/student" exact component={StudentDashboard} />
           <Route path="/student/viewExam" exact component={ViewExamss} />
+          <Route path="/scanner/:data" render={props => <Pdf {...props} />} />
           <Route path="/*" exact component={ NotFound } />
           </Switch>
         </div>

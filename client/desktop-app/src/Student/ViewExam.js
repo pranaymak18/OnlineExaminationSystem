@@ -3,11 +3,13 @@ import StudentHeader from './Header';
 import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom';
-const { remote, BrowserWindow, Menu } = window.require('electron');
+const path = require('path');
+const url = require('url');
+
+const { remote , BrowserWindow , Menu } = window.require('electron');
+ 
 const fs = require("fs");
 const axios = require('axios');
-
-
 
 class ViewExamss extends Component {
     constructor(props) {
@@ -15,25 +17,42 @@ class ViewExamss extends Component {
         this.state = {
             loader: false,
             cookie : "",
-            exams: ""
+            exams: "",
+            examType:""
         }
         this.startExam = this.startExam.bind(this);
     }
 
-    startExam(url) {
-      
+    startExam(url1,url2) {
+        //const remote = require('electron').remote;
         const BrowserWindow = remote.BrowserWindow;
         const win = new BrowserWindow({
           height: 600,
           width: 800,
           fullscreen : true,
-          alwaysOnTop: true
-          
+          alwaysOnTop: true,
+          webPreferences: {  enableRemoteModule: true ,webSecurity: false, nodeIntegration: true } 
         });
-        win.loadURL(url);
         win.setMenu(null);
-
-     /*   let constraintObj = {
+       // let data= this.state.exams[3].examId;
+       
+       
+        //alert(data);
+        //win.loadFile(url);
+        if(url1 === "No mcq")
+        {
+           // alert("inside url2 "+ url2)
+            
+            win.loadURL(`http://localhost:3000/scanner/${url2}`);
+        }
+       else {
+         
+        win.loadURL(url1);
+       }
+       
+        //alert('Hello');
+        /*
+        let constraintObj = {
             audio: true,
             video: true
         }
@@ -69,8 +88,8 @@ class ViewExamss extends Component {
                     chunks = [];
                 }
 
-            })*/
-
+            })
+*/
     }
     
     componentDidMount() {
@@ -117,6 +136,7 @@ class ViewExamss extends Component {
             showExams.push(
                 <p>
                     Failed to fetch data.
+                
                 </p>
             );
         } else if (this.state.exams.length === 0) {
@@ -129,16 +149,18 @@ class ViewExamss extends Component {
             for (let i = 0; i < this.state.exams.length; i++) {
                 let color = "info";
                 if (i % 2) color = "danger"
+                
+                    
                 showExams.push(
                     <Card body inverse color={color} style={{ margin: 10 }}>
                         <CardText>Subject Name : {this.state.exams[i].subjectName}</CardText>
                         <CardText>Exam Date : {this.state.exams[i].examDate}</CardText>
                         <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                         <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
-                        <CardText>Exam Link : <button onClick={() => this.startExam(this.state.exams[i].formLink)}>START EXAM</button></CardText>
+                        <CardText>Exam Link : <button onClick={() => this.startExam(this.state.exams[i].formLink,this.state.exams[i].examId)}>START EXAM</button></CardText>
                     </Card>
                 );
-                
+              
             }
         }
         return (

@@ -1,9 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment,useState } from 'react';
+import uuid from 'react-uuid'
 import FacultyHeader from './Header';
 import { Breadcrumb, BreadcrumbItem, Jumbotron, Table, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom';
 import { ExcelRenderer } from 'react-excel-renderer';
+import _uniqueId from 'lodash/uniqueId';
 const shell = window.require('electron').shell;
 const axios = require('axios');
 class CreateExam extends Component {
@@ -19,12 +21,13 @@ class CreateExam extends Component {
             cookie: "",
             name:"",
         }
+        
         this.fileHandler = this.fileHandler.bind(this);
         this.createExam = this.createExam.bind(this);
         this.onChangeValue= this.onChangeValue.bind(this);
     }
 
-    /*componentDidMount() {
+    componentDidMount() {
         let temp = document.cookie.split("; ");
         let email = temp[0].split("=")[1];
         let role = temp[1].split("=")[1];
@@ -36,7 +39,24 @@ class CreateExam extends Component {
                 orgId : orgId
             }
         });
-    }*/
+    }
+
+    fileUpload = e => {
+
+        let files = e.target.files
+        // console.log(files);
+
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+
+        reader.onload = (file) => {
+            this.setState({
+                pdf: file.target.result,
+                pdfName: files[0].name
+            });
+        }
+    }
+
     onChangeValue = (event) => {
         //alert(event.target.value);
         if(event.target.value==="mcq")
@@ -63,12 +83,27 @@ class CreateExam extends Component {
     }
     createExam = () => {
         
-        let formURL = document.getElementById("formLink").value;
+        this.id = uuid();
+        let faculty=  this.state.cookie.email;
+        alert("faculty is "+faculty+" this.id = "+this.id)
+        
+        
         let sbj = document.getElementById("subjectName").value;
         let date = document.getElementById("examDate").value;
         let dur = document.getElementById("duration").value;
         let des = document.getElementById("description").value;
-
+        let formURL
+        alert(this.state.name)
+        if(this.state.name === "mcq")
+        {
+         formURL = document.getElementById("formLink").value;
+            
+        }
+        else if(this.state.name = "written"){
+            formURL ="No mcq"
+        }
+      
+       
         if(!formURL || !sbj || !date || !dur) {
             alert("Please enter the exam data correctly !");
         } else {
@@ -80,12 +115,36 @@ class CreateExam extends Component {
             });
 
             let reqBody = [];
+            let facultyexam = [];
+            
+            
+                //for faculty
+            facultyexam.push({
+                
+                email: faculty,
+                examId: this.id,
+                formLink : formURL,
+                subjectName : sbj,
+                pdf: this.state.pdf,
+                pdfName: this.state.pdfName,
+                examDate : date,
+                examDuration : dur,
+                examDescription : des
+            });
+            axios.post('http://localhost:5000/createExam', {
+                users: facultyexam
+            })
+            
             for (let i = 1; i < this.state.rows.length; i++) {
-                if (!this.state.rows[i][0]) break;
+                if (!this.state.rows[i][0]) break;                
                 reqBody.push({
+                    
                     email: this.state.rows[i][1],
-                    formLink : formURL,
+                    examId: this.id,
+                    formLink : formURL,                   
                     subjectName : sbj,
+                    pdf: this.state.pdf,
+                    pdfName: this.state.pdfName,
                     examDate : date,
                     examDuration : dur,
                     examDescription : des
@@ -102,6 +161,9 @@ class CreateExam extends Component {
                     showMessage: "block",
                     message: response.data.status
                 });
+
+                window.location.reload(); 
+                
                 console.log(response);
             })
             .catch(function (error) {
@@ -136,6 +198,7 @@ class CreateExam extends Component {
     }
 
     render() {
+        
         console.log(this.state.cookie);
         let displayUploadedData = [];
         let data = [];
@@ -264,7 +327,7 @@ class CreateExam extends Component {
                     Upload PDF File
                     <div style={{ borderStyle: 'solid', borderColor:"#F5F5F5" ,padding:"10px" , borderRadius:"5px"  }}>
                     <FormGroup>
-                        <Input type="file" name="pdf" id="pdf" placeholder="UPLOAD PDF FILE" required/>
+                        <Input type="file" name="id" id="pdf"  onChange={this.fileUpload} placeholder="UPLOAD PDF FILE" required/>
                     </FormGroup>
                     </div>
                     <br />
@@ -360,7 +423,7 @@ class CreateExam extends Component {
                         </div>
                         <Jumbotron>
                             <div>
-                                <h2>Follows the steps to create exam</h2>
+                                <h2>Follow the steps to create exam</h2>
                                 <p style={{ fontSize: 15 }}>
                                     1. Download the sample excel file to add a student for exam<br />
                                     2. Edit the downloaded file as per the file formats<br />
@@ -375,7 +438,7 @@ class CreateExam extends Component {
                         </Jumbotron>
 
                         <ul className="list-unstyled CTAs">
-                            <li><a onClick={() => shell.openExternal("https://drive.google.com/file/d/1fZ1VETvLAPYCLwkAH4Gtv6Na8-1KGtfN/view?usp=sharing")} className="article">Download sample document</a></li>
+                            <li><a onClick={() => shell.openExternal("https://docs.google.com/spreadsheets/d/1qcM8cvn09nIuT2Eumr-78cn3n-aCKScUDcIzFcCVQII/edit?usp=drivesdk")} className="article">Download sample document</a></li>
                             <div style={{ borderStyle: 'dashed' }}><center><h3>Upload File</h3></center><input type="file" onChange={this.fileHandler.bind(this)} style={{ "padding": "10px" }} /></div>
                         </ul>
                         {displayUploadedData}

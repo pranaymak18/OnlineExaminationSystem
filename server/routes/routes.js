@@ -8,12 +8,15 @@ const fs = require('fs');
 const { MongoClient } = require('mongodb');
 const nodemailer = require('nodemailer');
 const generator = require('generate-password');
+const forms = require('../models/ExamModels');
 
 router.use(bodyParser.json());
 const dotenv = require('dotenv');
+const { response } = require('express');
 dotenv.config()
 
 let ses = false;
+
 
 router.post('/signup',(request,response,next)=>{
     signUpTemplateCopy.countDocuments({ email: request.body.email }, (err, cnt) => {        
@@ -294,6 +297,24 @@ router.get("/dashboard",(req, res) => {
 
 
 
+router.post("/pdf",function (req,res) {
+    let id = req.body.id;
+    console.log(id);
+    var query = forms.find({"exam.examId": id},{_id: 0, exam:{$elemMatch: {examId : id}}});
+    query.exec((err,data) => {
+        if(err) {
+            res.status(500);
+        } else if(data.length) {    
+            pdf = data[0].exam[0].pdf
+            console.log("inside /pdf" + data[0].exam[0].pdfName);
+            
+            res.status(200).json({pdf});
+        }
+        else{
+            console.log("data lenght is 0" )
+        }
+    })
+})
 
 
 

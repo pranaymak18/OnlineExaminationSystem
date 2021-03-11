@@ -28,6 +28,7 @@ app.use(bodyParser.json({limit: '10mb' }));
 app.use(express.urlencoded({limit: '10mb', extended: false }));
 app.use(express.json())
 app.use(cors())
+
 app.use('/app', routesUrls)
 app.use("/addUser",addUsersRouter);
 app.use("/getUsers",getUsersRouter);
