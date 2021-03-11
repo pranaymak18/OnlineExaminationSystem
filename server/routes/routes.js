@@ -249,16 +249,21 @@ router.get("/dashboard",(req, res) => {
 
     })
 
-    router.get("/pdf",function (req,res) {
+    router.post("/pdf",function (req,res) {
         let id = req.body.id;
         console.log(id);
-        var query = forms.find({ "examId" : id  });
+        var query = forms.find({"exam.examId": id},{_id: 0, exam:{$elemMatch: {examId : id}}});
         query.exec((err,data) => {
             if(err) {
                 res.status(500);
-            } else {
-                console.log(data);
-                res.status(200).json({exam : data});
+            } else if(data.length) {    
+                pdf = data[0].exam[0].pdf
+                console.log("inside /pdf" + data[0].exam[0].pdfName);
+                
+                res.status(200).json({pdf});
+            }
+            else{
+                console.log("data lenght is 0" )
             }
         })
     })

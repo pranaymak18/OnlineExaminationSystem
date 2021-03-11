@@ -124,6 +124,7 @@ class ViewExamss extends Component {
             showExams.push(
                 <p>
                     Failed to fetch data.
+                
                 </p>
             );
         } else if (this.state.exams.length === 0) {

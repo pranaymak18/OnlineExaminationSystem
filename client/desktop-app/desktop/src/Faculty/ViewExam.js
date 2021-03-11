@@ -14,7 +14,7 @@ class ViewExams extends Component {
             exams: ""
         }
     }
-    /*componentDidMount() {
+    componentDidMount() {
         let temp = document.cookie.split("; ");
         let email = temp[0].split("=")[1];
         let role = temp[1].split("=")[1];
@@ -48,7 +48,7 @@ class ViewExams extends Component {
             });
         })
     }
-    */
+    
     render() {
         let showExams = [];
         if (this.state.exams === "") {
@@ -73,7 +73,8 @@ class ViewExams extends Component {
                         <CardText>Exam Date : {this.state.exams[i].examDate}</CardText>
                         <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                         <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
-                        <CardText>Exam Link :<a onClick={() => shell.openExternal(this.state.exams[i].formLink)} className="article">CLICK HERE</a></CardText>
+                        <CardText>Exam Link : <a onClick={() => shell.openExternal(this.state.exams[i].formLink)} className="article">CLICK HERE</a></CardText>
+                        <CardText>View Response : <a href="http://localhost:3000/student/viewResponse" className="article">CLICK HERE</a></CardText>
                     </Card>
                 );
             }

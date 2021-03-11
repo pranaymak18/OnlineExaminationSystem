@@ -19,7 +19,7 @@ class Start extends React.Component {
           <Route exact path={"/admin"} component={admin} />
           <Route exact path={"/signup"} component={signup} />
           <Route exact path={"/dashboard"} component={dashboard} />
-          <Route exact path={"/scanner/:email"} component={web} />
+          <Route exact path={"/scanner/:email/:id"} component={web} />
           <Route exact path={"/*"} component={error} />
         </Switch>
       </BrowserRouter>
