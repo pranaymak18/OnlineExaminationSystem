@@ -56,6 +56,7 @@ export default function AllPages(props) {
       let email1 = temp[0].split("=")[1];
       let role = temp[1].split("=")[1];
       let orgId = temp[2].split("=")[1];
+      alert(email1);
       //alert(props.id);
       return( 
       <div>

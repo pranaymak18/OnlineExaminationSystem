@@ -22,7 +22,7 @@ import picker from './Student/picker';
 //import picker from './Student/app.jsx'; 
 //import './Student/style.css';
 import web from './Student/Website';
-import ViewResponse from './Student/ViewResponce';
+import ViewResponse from './Faculty/ViewResponce';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -42,7 +42,7 @@ ReactDOM.render(
           <Route path="/faculty/createExam" exact component={CreateExam} />
           <Route path="/student" exact component={StudentDashboard} />
           <Route path="/student/viewExam" exact component={ViewExamss} />
-          <Route path="/student/viewResponse" exact component={ViewResponse} />
+          <Route path="/faculty/viewResponse" exact component={ViewResponse} />
           <Route path="/scanner/:id" render={props => <Pdf {...props} />} />
           <Route path="/*" exact component={ NotFound } />
           </Switch>

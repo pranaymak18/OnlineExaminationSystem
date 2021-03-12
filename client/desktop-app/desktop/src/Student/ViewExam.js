@@ -17,12 +17,13 @@ class ViewExamss extends Component {
         this.state = {
             loader: false,
             cookie : "",
-            exams: ""
+            exams: "",
+            examType:""
         }
         this.startExam = this.startExam.bind(this);
     }
 
-    startExam(url) {
+    startExam(url1,url2) {
         //const remote = require('electron').remote;
         const BrowserWindow = remote.BrowserWindow;
         const win = new BrowserWindow({
@@ -33,11 +34,20 @@ class ViewExamss extends Component {
           webPreferences: {  enableRemoteModule: true ,webSecurity: false, nodeIntegration: true } 
         });
         win.setMenu(null);
-        let data= this.state.exams[0].examId;
-
+       // let data= this.state.exams[3].examId;       
         //alert(data);
         //win.loadFile(url);
-        win.loadURL(`http://localhost:3000/scanner/${data}`);
+        if(url1 === "No mcq")
+        {
+           // alert("inside url2 "+ url2)
+            
+            win.loadURL(`http://localhost:3000/scanner/${url2}`);
+        }
+       else {
+         
+        win.loadURL(url1);
+       }
+       
         //alert('Hello');
         /*
         let constraintObj = {
@@ -75,7 +85,6 @@ class ViewExamss extends Component {
                     reader.readAsArrayBuffer(blob);
                     chunks = [];
                 }
-
             })
 */
     }
@@ -137,15 +146,18 @@ class ViewExamss extends Component {
             for (let i = 0; i < this.state.exams.length; i++) {
                 let color = "info";
                 if (i % 2) color = "danger"
+                
+                    
                 showExams.push(
                     <Card body inverse color={color} style={{ margin: 10 }}>
                         <CardText>Subject Name : {this.state.exams[i].subjectName}</CardText>
                         <CardText>Exam Date : {this.state.exams[i].examDate}</CardText>
                         <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                         <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
-                        <CardText>Exam Link : <button onClick={() => this.startExam(this.state.exams[i].formLink)}>START EXAM</button></CardText>
+                        <CardText>Exam Link : <button onClick={() => this.startExam(this.state.exams[i].formLink,this.state.exams[i].examId)}>START EXAM</button></CardText>
                     </Card>
                 );
+              
             }
         }
         return (

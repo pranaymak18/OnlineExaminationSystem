@@ -35,14 +35,14 @@ class ViewExams extends Component {
             user : email
         })
         .then((Data) => {
-            console.log(Data);
+            //console.log(Data);
             self.setState({
                 loader : false,
                 exams : Data.data.exams[0].exam
             });
         })
         .catch((err) => {
-            console.log(err)
+            //console.log(err)
             self.setState({
                 loader: false
             });
@@ -74,7 +74,7 @@ class ViewExams extends Component {
                         <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                         <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
                         <CardText>Exam Link : <a onClick={() => shell.openExternal(this.state.exams[i].formLink)} className="article">CLICK HERE</a></CardText>
-                        <CardText>View Response : <a href="http://localhost:3000/student/viewResponse" className="article">CLICK HERE</a></CardText>
+                        <CardText>View Response : <a href="http://localhost:3000/faculty/viewResponse" className="article">CLICK HERE</a></CardText>
                     </Card>
                 );
             }

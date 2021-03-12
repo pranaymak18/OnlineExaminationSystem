@@ -41,9 +41,6 @@ export default class Pdf extends Component{
        })
       
     })
-    
-    
-    
   }
   //alert(props.match.params)
   
