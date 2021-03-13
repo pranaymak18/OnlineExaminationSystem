@@ -1,9 +1,18 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import ReactRoundedImage from "react-rounded-image";
 import MyPhoto from "./Faculty.png";
 
+
+function logout(){
+   // document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    //document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+   //document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+   return '/' 
+}
 export default function FacultyHeader(props) {
+   
     return (
         <Fragment>
             <nav id="sidebar">
@@ -17,7 +26,7 @@ export default function FacultyHeader(props) {
                     <li><Link to="/faculty/viewExam">View Created Exams</Link></li>
                     <li><Link to="/faculty/createExam">Create Exam</Link></li>
                     <li><Link to="/faculty/result">Upload Result</Link></li>
-                    <li><Link to="/">Logout</Link></li>
+                    <li><Link to={logout()}>Logout</Link></li>
                 </ul>
             </nav>
         </Fragment>

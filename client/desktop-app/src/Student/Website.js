@@ -15,10 +15,10 @@ export default class web extends React.Component {
 
         let temp = document.cookie.split(";");
         
-            alert('In If');
-            let email = temp[0].split("=")[1];
-            let role = temp[1].split("=")[1];
-            let orgId = temp[2].split("=")[1];
+           // alert('In If');
+            let email = temp[1].split("=")[1];
+            let role = temp[2].split("=")[1];
+            let orgId = temp[0].split("=")[1];
             alert(email);
             this.setState({
                 cookie : {

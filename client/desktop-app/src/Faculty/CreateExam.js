@@ -93,10 +93,12 @@ class CreateExam extends Component {
         let dur = document.getElementById("duration").value;
         let des = document.getElementById("description").value;
         let formURL
+        let answer =true
         alert(this.state.name)
         if(this.state.name === "mcq")
         {
          formURL = document.getElementById("formLink").value;
+         answer=false
             
         }
         else if(this.state.name = "written"){
@@ -120,7 +122,7 @@ class CreateExam extends Component {
             
                 //for faculty
             facultyexam.push({
-                
+                answersheet: answer,
                 email: faculty,
                 examId: this.id,
                 formLink : formURL,
@@ -138,7 +140,7 @@ class CreateExam extends Component {
             for (let i = 1; i < this.state.rows.length; i++) {
                 if (!this.state.rows[i][0]) break;                
                 reqBody.push({
-                    
+                    answersheet: false,
                     email: this.state.rows[i][1],
                     examId: this.id,
                     formLink : formURL,                   

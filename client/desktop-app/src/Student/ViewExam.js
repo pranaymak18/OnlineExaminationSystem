@@ -23,6 +23,44 @@ class ViewExamss extends Component {
         this.startExam = this.startExam.bind(this);
     }
 
+    componentDidMount() {
+        let temp = document.cookie.split(";");
+        let email = temp[0].split("=")[1];
+        let role = temp[1].split("=")[1];
+        let orgId = temp[2].split("=")[1];
+        this.setState({
+            cookie : {
+                email : email,
+                role : role,
+                orgId : orgId,
+                exams : ""
+            },
+        });
+        alert(email)
+
+        this.setState({
+            loader: true
+        });
+
+        let self = this;
+
+        axios.post("http://localhost:5000/viewExam",{
+            user : email
+        })
+        .then((Data) => {
+            console.log(Data);
+            self.setState({
+                loader : false,
+                exams : Data.data.exams[0].exam
+            });
+        })
+        .catch((err) => {
+            console.log(err)
+            self.setState({
+                loader: false
+            });
+        })
+    }
     startExam(url1,url2) {
         //const remote = require('electron').remote;
         const BrowserWindow = remote.BrowserWindow;
@@ -92,43 +130,7 @@ class ViewExamss extends Component {
 */
     }
     
-    componentDidMount() {
-        let temp = document.cookie.split(";");
-        let email = temp[0].split("=")[1];
-        let role = temp[1].split("=")[1];
-        let orgId = temp[2].split("=")[1];
-        this.setState({
-            cookie : {
-                email : email,
-                role : role,
-                orgId : orgId,
-                exams : ""
-            },
-        });
-
-        this.setState({
-            loader: true
-        });
-
-        let self = this;
-
-        axios.post("http://localhost:5000/viewExam",{
-            user : email
-        })
-        .then((Data) => {
-            console.log(Data);
-            self.setState({
-                loader : false,
-                exams : Data.data.exams[0].exam
-            });
-        })
-        .catch((err) => {
-            console.log(err)
-            self.setState({
-                loader: false
-            });
-        })
-    }
+    
 
     render() {
         let showExams = [];

@@ -21,21 +21,15 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
 
-        function deleteAllCookies() {
-            var cookies = document.cookie.split(";");
-        
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i];
-                var eqPos = cookie.indexOf("=");
-                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-            }
-        }
-        deleteAllCookies();
+         
         
         this.handleUrlRedirect = this.handleUrlRedirect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
+
+   
+
 
     state = {
         toAdminDashboard: false,
@@ -66,12 +60,17 @@ export default class Login extends Component {
                 password: password1,
                 
             };
+
             
             axios.post("http://localhost:5000/app/signin", {admin_users})
             .then((data) => {
                 
+                
                 if(data.data.role==="admin") {
-                    
+                    //document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
@@ -81,17 +80,29 @@ export default class Login extends Component {
                        toAdminDashboard: true
                     }))
                 } else if(data.data.role==="student") {
+                   // document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                   
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
+                    alert("login "+document.cookie)
                     history.push("/student");  
                     this.setState(() => ({
                         toStudentDashboard: true
                     })) 
                 } else if(data.data.role==="faculty") {
+                  //  document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                   // document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
+
+                    alert("login "+document.cookie)
+
                     history.push("/faculty");
                     this.setState(() => ({
                         toFacultyDashboard: true

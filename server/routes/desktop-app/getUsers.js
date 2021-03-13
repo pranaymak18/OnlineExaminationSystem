@@ -11,8 +11,9 @@ mainRouter.use(bodyParser.json());
 
 
 mainRouter.route("/faculties")
-    .get((req, res) => {
-        let query = user.find({"role" : "faculty"});
+    .post((req, res) => {
+        let query = user.find( {  $and: [{ orgId: { $eq: req.body.orgId } }, {  "role" : "faculty" } ] })
+        // let query = user.find({"role" : "faculty"});
         query.exec((err,data) => {
             if(err) {
                 res.status(500);
@@ -22,8 +23,9 @@ mainRouter.route("/faculties")
         })
     });
 mainRouter.route("/students")
-.get((req, res) => {
-    let query = user.find({"role" : "student"});
+.post((req, res) => {
+    let query = user.find( {  $and: [{ orgId: { $eq: req.body.orgId } }, {  "role" : "student" } ] })
+    // let query = user.find({"role" : "student"});
     query.exec((err,data) => {
         if(err) {
             res.status(500);
@@ -33,13 +35,15 @@ mainRouter.route("/students")
     })
 });
 mainRouter.route("/admins")
-    .get((req, res) => {
-        console.log("/admins")
-        let query = user.find({"role" : "admin"});
+    .post((req, res) => {
+        console.log("/admins "+ req.body.orgId)
+        let query = user.find( {  $and: [{  "role" : "admin" },{ "orgId":  req.body.orgId  } ] })
+      // let query = user.find({"role" : "admin"});
         query.exec((err,data) => {
             if(err) {
                 res.status(500);
             } else {
+                console.log(data)
                 res.status(200).json({users : data});
             }
         })

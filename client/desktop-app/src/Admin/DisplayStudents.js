@@ -18,7 +18,11 @@ class DisplayStudents extends Component {
             loader: true
         });
         let self = this;
-        axios.get("http://localhost:5000/getUsers/students")
+        let temp = document.cookie.split(";");
+        let email = temp[0].split("=")[1];
+        let role = temp[1].split("=")[1];
+        let orgId = temp[2].split("=")[1];
+        axios.post("http://localhost:5000/getUsers/students",{orgId})
             .then((studentsData) => {
                 self.setState({
                     students: studentsData.data.users,

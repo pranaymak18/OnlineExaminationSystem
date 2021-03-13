@@ -56,11 +56,11 @@ export default function AllPages(props) {
       let email1 = temp[0].split("=")[1];
       let role = temp[1].split("=")[1];
       let orgId = temp[2].split("=")[1];
-      //alert(props.id);
+      alert("in single page "+ email1);
       return( 
       <div>
       <QRCode
-      value={`http://192.168.43.112:3001/scanner/${email1}/${props.id}`}
+      value={`http://192.168.43.39:3001/scanner/${email1}/${props.id}`}
       size={128}
       bgColor={"#ffffff"}
       fgColor={"#000000"}

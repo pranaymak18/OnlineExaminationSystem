@@ -17,7 +17,12 @@ class DIsplayAdmins extends Component {
             loader: true
         });
         let self = this;
-        axios.get("http://localhost:5000/getUsers/admins")
+        let temp = document.cookie.split(";");
+        let email = temp[0].split("=")[1];
+        let role = temp[1].split("=")[1];
+        let orgId = temp[2].split("=")[1];
+        alert("orgId "+orgId)
+        axios.post("http://localhost:5000/getUsers/admins",{orgId})
             .then((adminsData) => {
                 self.setState({
                     admins: adminsData.data.users,

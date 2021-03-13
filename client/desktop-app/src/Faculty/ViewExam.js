@@ -28,7 +28,7 @@ class ViewExams extends Component {
             },
             loader:true
         });
-        
+        alert("in viewexam of faculty "+ email)
         let self = this;
 
         axios.post("http://localhost:5000/viewExam",{
@@ -74,6 +74,7 @@ class ViewExams extends Component {
                         <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                         <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
                         <CardText>Exam Link :<a onClick={() => shell.openExternal(this.state.exams[i].formLink)} className="article">CLICK HERE</a></CardText>
+                        <CardText>View Response : <a href= {`http://localhost:3000/faculty/viewResponse/${this.state.exams[i].examId}`} className="article">CLICK HERE</a></CardText>
                     </Card>
                 );
             }

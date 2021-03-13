@@ -15,7 +15,7 @@ export default class Pdf extends Component{
   {
     super(props);
     const { data } = props.match.params;
-    alert(data); 
+    alert("examid in written.js "+data); 
     this.state = {
       pdf : "",
       id : data ,
@@ -114,7 +114,7 @@ export default class Pdf extends Component{
     {
       let temp = document.cookie.split(";");  
       let email = temp[0].split("=")[1];
-      alert(email);
+      alert("email is "+email);
       display.push(
         <div>
           <center>
@@ -127,7 +127,7 @@ export default class Pdf extends Component{
           <div>
           
           <QRCode
-          value={`http://192.168.43.112:3001/scanner/${email}/${this.state.id}`}
+          value={`http://192.168.43.39:3001/scanner/${email}/${this.state.id}`}
           size={128}
           bgColor={"#ffffff"}
           fgColor={"#000000"}

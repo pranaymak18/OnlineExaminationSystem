@@ -22,7 +22,7 @@ const connectDB = async() => {
         
 }, ()=> console.log('Database connected'))
 }
-
+mongoose.set('useFindAndModify', false);
 
 app.use(bodyParser.json({limit: '10mb' }));
 app.use(express.urlencoded({limit: '10mb', extended: false }));
