@@ -9,6 +9,7 @@ const { MongoClient } = require('mongodb');
 const nodemailer = require('nodemailer');
 const generator = require('generate-password');
 const forms = require('../models/ExamModels');
+const answersheet = require('../models/AnswerSheetModels')
 
 router.use(bodyParser.json());
 const dotenv = require('dotenv');
@@ -39,6 +40,8 @@ router.post('/signup',(request,response,next)=>{
                 photo: request.body.photo,
                 photoName: request.body.photoName
             });
+
+
             signUpTemplateCopy.create(signedUpUser)
             // details.save()
             .then((signedUpUser) => {
@@ -46,6 +49,8 @@ router.post('/signup',(request,response,next)=>{
                 response.statusCode = 200;
                 response.setHeader('Content-Type', 'text/plain');
                 response.json({ "statusMessage": "Details Has Been Sent To The Admin. Further Instructions Will Be Sent To Given Mail Id." });
+                
+                
             }).catch((err) => next(err))
         }
     }
@@ -306,7 +311,7 @@ router.post("/pdf",function (req,res) {
             res.status(500);
         } else if(data.length) {    
             pdf = data[0].exam[0].pdf
-            console.log("inside /pdf" + data[0].exam[0].pdfName);
+            console.log("inside /pdf" + data[0].exam[0].examDescription            );
             
             res.status(200).json({pdf});
         }
@@ -315,6 +320,45 @@ router.post("/pdf",function (req,res) {
         }
     })
 })
+
+router.post("/answersheet",(req, res) => {
+        
+        let answers = req.body.examId;
+        console.log("answers "+answers)
+        
+               
+               // console.log(body[i].email)
+                answersheet.countDocuments({ "students.studentEmail":  req.body.studentEmail }, (err, cnt) => { 
+                    
+                if(err)
+                {
+                    consol.log(err)
+                }
+                else{
+                    if(cnt){
+                        console.log("if cnt "+cnt)
+                        res.setHeader('Content-Type', 'text/plain');
+                        res.json({"statusMessage":"Cannot upload second time"})
+
+                    }
+                else{
+                var data = {"studentEmail":req.body.studentEmail,"studentName" : req.body.studentName, "pdf" : req.body.pdf, "pdfName" : req.body.pdfName};
+                answersheet.findOneAndUpdate({ examId: req.body.examId },
+                                             { $push: { students: data } })
+                                             .then((data) => { 
+                                                    console.log(req.body.examId +" and data value of cnt = >" +cnt )
+                                                    res.json({"statusMessage":"Uploaded Successfully"})
+                                                             }).catch((err) => {console.log(err); });
+                                                                            
+                                                            }                            
+                  }
+                  })
+            
+          //  res.status(200).json({"status" : "Exam created !"});
+        
+    });
+
+
 
 
 
