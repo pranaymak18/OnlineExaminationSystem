@@ -328,7 +328,7 @@ router.post("/answersheet",(req, res) => {
         
                
                // console.log(body[i].email)
-                answersheet.countDocuments({ "students.studentEmail":  req.body.studentEmail }, (err, cnt) => { 
+                answersheet.countDocuments({$and: [{"examId":req.body.examId},{"students.studentEmail":  req.body.studentEmail }]}, (err, cnt) => { 
                     
                 if(err)
                 {
@@ -358,6 +358,28 @@ router.post("/answersheet",(req, res) => {
         
     });
 
+    router.post("/showanswersheet",function (req,res) {
+        let id = req.body.email;
+        console.log(req.body.eid);
+        var query = answersheet.find({$and: [{"examId": req.body.eid},{"students.studentEmail": id}]});
+        query.exec((err,data) => {
+            if(err) {
+                res.status(500);
+                console.log(err)
+            } else if(data.length) {    
+               pdf = data[0].students
+                console.log("inside /showanswersheet"    );
+                
+                res.status(200).json({pdf});
+            }
+            else{
+                console.log("data lenght is 0" )
+            }
+        })
+    })
+
+
+    
 
 
 

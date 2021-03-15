@@ -28,9 +28,9 @@ export default function AllPages(props) {
   })
   
 */
- // alert("in singlepage-------- "+ props.pdf )
+ alert("in singlepage-------- "+ props.pdf )
   
-  const { pdf } = props.pdf;
+  //const { pdf } = props.pdf;
   
   //alert("In Single"+ pdf);
   const ShowQR = () => { 
@@ -38,41 +38,7 @@ export default function AllPages(props) {
     setCount(1);
   }
 
-  const RenderData = () => {
-    //alert("In Fun");
-    if(Count==0)
-    { 
-      //alert("In If");
-      return(
-      <div>
-      
-      <Button onClick={ShowQR}>Submit</Button>
-      
-      </div>
-      );
-    }
-    else{
-      let temp = document.cookie.split(";");  
-      let email1 = temp[0].split("=")[1];
-      let role = temp[1].split("=")[1];
-      let orgId = temp[2].split("=")[1];
-      alert("in single page "+ email1);
-      return( 
-      <div>
-      <QRCode
-      value={`http://192.168.43.39:3001/scanner/${email1}/${props.id}`}
-      size={128}
-      bgColor={"#ffffff"}
-      fgColor={"#000000"}
-      level={"L"}
-      includeMargin={true}
-      renderAs={"svg"}
-      />
-      </div>
-      );
-      }
-
-  }
+ 
   return (
     <>
     <Document
@@ -81,15 +47,12 @@ export default function AllPages(props) {
       onLoadSuccess={onDocumentLoadSuccess}
     >
       {Array.from(new Array(numPages), (el, index) => (
-        <Page key={`page_${index + 1}`} pageNumber={index + 1} scale={1.5} />
+        <Page key={`page_${index + 1}`} pageNumber={index + 1} scale={1.5}/>
       ))}
     </Document>
     <br />
-    <center>
-    {
-    RenderData()
-    }    
-      </center>
+    
+   
   </>
   );
 }

@@ -19,7 +19,7 @@ import StudentDashboard from './Student/StudentDashboard';
 import NotFound from './NotFound';
 import Pdf from './Student/Written';
 import ViewResponse  from './Faculty/ViewResponse'
-
+import ShowAnswersheet from './Faculty/ShowAnwersheet'
 
 
 ReactDOM.render(
@@ -41,7 +41,9 @@ ReactDOM.render(
           <Route path="/student" exact component={StudentDashboard} />
           <Route path="/student/viewExam" exact component={ViewExamss} />
           <Route path="/scanner/:data" render={props => <Pdf {...props} />} />
-         {/* <Route path="/faculty/viewResponse/:id" exact component={ViewResponse} />*/}
+          <Route path="/faculty/viewResponse/:id" exact component={ViewResponse} />
+          <Route path="/faculty/showanswersheet/:data/:examId" render={props => <ShowAnswersheet {...props} />} />
+         
           <Route path="/*" exact component={ NotFound } />
           </Switch>
         </div>

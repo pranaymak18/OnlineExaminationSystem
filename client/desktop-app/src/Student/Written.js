@@ -110,7 +110,7 @@ export default class Pdf extends Component{
 
       );
     }
-    else if(this.state.timer == false)
+    else if(this.state.timer === false)
     {
       let temp = document.cookie.split(";");  
       let email = temp[0].split("=")[1];

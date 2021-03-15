@@ -8,6 +8,7 @@ const getUsersRouter = require('./routes/desktop-app/getUsers');
 const getOrgId = require('./routes/desktop-app/getOrgId');
 const createExam = require('./routes/desktop-app/createExam');
 const viewExam = require('./routes/desktop-app/viewExam');
+const answersheet = require('./routes/desktop-app/getAnswersheet')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
@@ -35,6 +36,8 @@ app.use("/getUsers",getUsersRouter);
 app.use("/getOrgId", getOrgId);
 app.use("/createExam", createExam);
 app.use("/viewExam", viewExam);
+app.use("/AnswerSheet", answersheet);
+
 app.listen(5000, () => console.log("Server is running"))
 
 connectDB();

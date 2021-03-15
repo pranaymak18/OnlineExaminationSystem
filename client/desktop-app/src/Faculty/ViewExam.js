@@ -67,6 +67,21 @@ class ViewExams extends Component {
             for (let i = 0; i < this.state.exams.length; i++) {
                 let color = "info";
                 if (i % 2) color = "danger"
+                if(this.state.exams[i].pdfName===null){
+
+                    showExams.push(
+                        <Card body inverse color={color} style={{ margin: 10 }}>
+                            <CardText>Subject Name : {this.state.exams[i].subjectName}</CardText>
+                            <CardText>Exam Date : {this.state.exams[i].examDate}</CardText>
+                            <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
+                            <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
+                            <CardText>Exam Link :<a onClick={() => shell.openExternal(this.state.exams[i].formLink)} className="article">CLICK HERE</a></CardText>
+                            
+                        </Card>
+                    );
+
+                }
+                else{
                 showExams.push(
                     <Card body inverse color={color} style={{ margin: 10 }}>
                         <CardText>Subject Name : {this.state.exams[i].subjectName}</CardText>
@@ -77,6 +92,7 @@ class ViewExams extends Component {
                         <CardText>View Response : <a href= {`http://localhost:3000/faculty/viewResponse/${this.state.exams[i].examId}`} className="article">CLICK HERE</a></CardText>
                     </Card>
                 );
+                }
             }
         }
         return (

@@ -50,8 +50,13 @@ function AppHero(){
                                     <p>{item.content}</p>
                                     <div className="btnHolder"> 
                                         <Button type="primary" onClick={() => history.push('/signup',{ from : "index" })} >Register Your Organization</Button>
-                                        <br />
+                       
+                                        
+                                       
+                                        <Button type="primary" onClick={() => history.push('/admin',{ from : "index" })} >Admin Login</Button>
                                          <br />
+                                         <br/>
+                                         
                                         <Button><i class="fas fa-desktop"> </i>Watch Demo</Button>
                                     </div>
                                 </div>
