@@ -48,7 +48,6 @@ class CreateExam extends Component {
 
         let reader = new FileReader();
         reader.readAsDataURL(files[0]);
-
         reader.onload = (file) => {
             this.setState({
                 pdf: file.target.result,
@@ -85,7 +84,7 @@ class CreateExam extends Component {
         
         this.id = uuid();
         let faculty=  this.state.cookie.email;
-        alert("faculty is "+faculty+" this.id = "+this.id)
+        //alert("faculty is "+faculty+" this.id = "+this.id)
         
         
         let sbj = document.getElementById("subjectName").value;
@@ -93,7 +92,7 @@ class CreateExam extends Component {
         let dur = document.getElementById("duration").value;
         let des = document.getElementById("description").value;
         let formURL
-        alert(this.state.name)
+        //alert(this.state.name)
         if(this.state.name === "mcq")
         {
          formURL = document.getElementById("formLink").value;
@@ -107,7 +106,7 @@ class CreateExam extends Component {
         if(!formURL || !sbj || !date || !dur) {
             alert("Please enter the exam data correctly !");
         } else {
-            alert("success");
+            //alert("success");
             this.setState({
                 showSpinner: true,
                 showMessage: "none",
@@ -155,7 +154,7 @@ class CreateExam extends Component {
                 users: reqBody
             })
             .then(function (response) {
-                console.log(self.state);
+                //console.log(self.state);
                 self.setState({
                     showSpinner: false,
                     showMessage: "block",

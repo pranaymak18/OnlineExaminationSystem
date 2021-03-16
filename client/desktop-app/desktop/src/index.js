@@ -22,7 +22,11 @@ import picker from './Student/picker';
 //import picker from './Student/app.jsx'; 
 //import './Student/style.css';
 import web from './Student/Website';
-import ViewResponse from './Faculty/ViewResponce';
+import ViewResponse from './Faculty/ViewResponse';
+import UploadResult from './Faculty/result';
+import ShowAnswersheet from './Faculty/ShowAnwersheet'
+import ViewResult from './Student/viewResult';
+
 
 ReactDOM.render(
   <React.StrictMode>
@@ -42,8 +46,11 @@ ReactDOM.render(
           <Route path="/faculty/createExam" exact component={CreateExam} />
           <Route path="/student" exact component={StudentDashboard} />
           <Route path="/student/viewExam" exact component={ViewExamss} />
-          <Route path="/faculty/viewResponse" exact component={ViewResponse} />
-          <Route path="/scanner/:id" render={props => <Pdf {...props} />} />
+          <Route path="/faculty/viewResponse/:id" exact component={ViewResponse} />
+          <Route path="/scanner/:data/:email" render={props => <Pdf {...props} />} />
+          <Route path="/faculty/viewresult" exact component={UploadResult} />
+          <Route path="/faculty/showanswersheet/:data/:examId" render={props => <ShowAnswersheet {...props} />} />
+          <Route path="/student/viewresult" exact component={ViewResult} />
           <Route path="/*" exact component={ NotFound } />
           </Switch>
         </div>

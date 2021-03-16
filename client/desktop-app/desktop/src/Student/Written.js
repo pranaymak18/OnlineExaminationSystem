@@ -14,21 +14,32 @@ export default class Pdf extends Component{
   constructor(props)
   {
     super(props);
-    const { id } = props.match.params;
-    //alert(id); 
+    const { data } = props.match.params;
+    const {email} = props.match.params;
+    //alert(email);
+    //alert(data); 
     this.state = {
       pdf : "",
-      id : id ,
+      id : data ,
       flag : false,
-      timer : true
+      timer : true,
+      email : email
+
     }
-    
+    //alert(this.state.email);
   }
 
+
+
   componentDidMount(){
+    //let temp = document.cookie.split(";");  
+    //let email1 = temp[0].split("=")[1];
     let pdfdata;
     let id = this.state.id;
-    //alert(id);
+    //alert(email1);
+    //this.state.email= email1;
+    
+    //alert(this.state.email);
     //let r=0;
     axios.post('http://localhost:5000/app/pdf',{ id })
     .then((Data) =>  {    
@@ -60,13 +71,13 @@ export default class Pdf extends Component{
       <center><h4>Take Your Exam</h4></center>
       <div className="all-page-container">
         
-        <AllPages pdf={this.state.pdf} id={this.state.id} />
+        <AllPages pdf={this.state.pdf} id={this.state.id} email={this.state.email}/>
       </div>
       <hr />
       <div>
         <center>
         <Timer
-            initialTime={10000}
+            initialTime={20000}
             direction="backward"
             checkpoints={[
               {
@@ -108,9 +119,8 @@ export default class Pdf extends Component{
     }
     else if(this.state.timer == false)
     {
-      let temp = document.cookie.split(";");  
-      let email = temp[0].split("=")[1];
-      alert(email);
+      
+      //alert(email);
       display.push(
         <div>
           <center>
@@ -123,7 +133,7 @@ export default class Pdf extends Component{
           <div>
           
           <QRCode
-          value={`http://192.168.43.112:3001/scanner/${email}/${this.state.id}`}
+          value={`http://192.168.43.112:3001/scanner/${this.state.email}/${this.state.id}`}
           size={128}
           bgColor={"#ffffff"}
           fgColor={"#000000"}
@@ -139,7 +149,7 @@ export default class Pdf extends Component{
     else{
       display.push(
         <div>
-          <h1>Loding PDF...</h1>
+          <h1>Loading PDF...</h1>
         </div>
       )
     }

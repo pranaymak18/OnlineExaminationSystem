@@ -58,14 +58,17 @@ export default class Login extends Component {
             .then((data) => {
                 
                 if(data.data.role==="admin") {
-                    document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-
+                    //document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = 'email=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    document.cookie = 'role=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    document.cookie = 'orgId=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
+                    //alert(document.cookie);
                     //this.context.history.push('/admin');
                     //history.push("/admin"); 
                     this.setState(() => ({
@@ -73,26 +76,33 @@ export default class Login extends Component {
                     }))
                 } else if(data.data.role==="student") {
 
-                    document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
+                    //document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = 'email=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    document.cookie = 'role=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    document.cookie = 'orgId=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
+                    //alert(document.cookie);
                     //history.push("/student");  
                     this.setState(() => ({
                         toStudentDashboard: true
                     })) 
                 } else if(data.data.role==="faculty") {
-                    document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
+                    //document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    //document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = 'email=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    document.cookie = 'role=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    document.cookie = 'orgId=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                     
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
+                    //alert(document.cookie);
                     history.push("/faculty");
                     this.setState(() => ({
                         toFacultyDashboard: true

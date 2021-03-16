@@ -40,8 +40,8 @@ class ViewExamss extends Component {
         if(url1 === "No mcq")
         {
            // alert("inside url2 "+ url2)
-            
-            win.loadURL(`http://localhost:3000/scanner/${url2}`);
+            //alert(url2);
+            win.loadURL(`http://localhost:3000/scanner/${url2}/${this.state.cookie.email}`);
         }
        else {
          
@@ -49,47 +49,11 @@ class ViewExamss extends Component {
        }
        
         //alert('Hello');
-        /*
-        let constraintObj = {
-            audio: true,
-            video: true
-        }
-        navigator.mediaDevices.getUserMedia(constraintObj)
-            .then(mediaStreamObj => {
-                let mediaRecorder = new MediaRecorder(mediaStreamObj);
-                let chunks = []
-                mediaRecorder.start();
-                mediaRecorder.ondataavailable = (ev) => {
-                    chunks.push(ev.data);
-                }
-                console.log(chunks);
-                win.on('closed', () => {   
-                    mediaRecorder.stop();
-                })
-                mediaRecorder.onstop = (ev) => {
-                    let blob = new Blob(chunks, { 'type': 'video/webm' });
-                    let reader = new FileReader();
-                    reader.onload = () => {
-                        let buffer = Buffer.from (reader.result);
-                        let fileName = new Date();
-                        
-                        fs.writeFile(fileName.toDateString()+".mp4", buffer, {}, (err, res) => {
-                            if (err) {
-                                console.log('error in saving')
-                            }
-                            else {
-                                console.log('video saved')
-                            }
-                        })
-                    }
-                    reader.readAsArrayBuffer(blob);
-                    chunks = [];
-                }
-            })
-*/
+        
     }
     
     componentDidMount() {
+        //alert(document.cookie);
         let temp = document.cookie.split(";");
         let email = temp[0].split("=")[1];
         let role = temp[1].split("=")[1];
@@ -147,7 +111,7 @@ class ViewExamss extends Component {
                 let color = "info";
                 if (i % 2) color = "danger"
                 
-                    
+                //alert(this.state.exams[i].examId);
                 showExams.push(
                     <Card body inverse color={color} style={{ margin: 10 }}>
                         <CardText>Subject Name : {this.state.exams[i].subjectName}</CardText>
