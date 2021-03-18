@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import FacultyHeader from './Header';
-import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom';
 const axios = require('axios');
@@ -28,6 +28,7 @@ class ViewExams extends Component {
             },
             loader:true
         });
+        alert(document.cookie)
         alert("in viewexam of faculty "+ email)
         let self = this;
 
@@ -51,13 +52,13 @@ class ViewExams extends Component {
     
     render() {
         let showExams = [];
-        if (this.state.exams === "") {
+        if (this.state.exams === "" && this.state.loader===false) {
             showExams.push(
                 <p>
                     Failed to fetch data.
                 </p>
             );
-        } else if (this.state.exams.length === 0) {
+        } else if (this.state.exams.length === 0 && this.state.loader===false) {
             showExams.push(
                 <p>
                     No exam found!
@@ -65,17 +66,18 @@ class ViewExams extends Component {
             );
         } else {
             for (let i = 0; i < this.state.exams.length; i++) {
-                let color = "info";
-                if (i % 2) color = "danger"
+                let color = "success";
+                
+                if (i % 2) color = "warning"
                 if(this.state.exams[i].pdfName===null){
 
                     showExams.push(
-                        <Card body inverse color={color} style={{ margin: 10 }}>
+                        <Card body inverse color={color} style={{ margin: 10 ,textDecorationColor: 'white'}}>
                             <CardText>Subject Name : {this.state.exams[i].subjectName}</CardText>
                             <CardText>Exam Date : {this.state.exams[i].examDate}</CardText>
                             <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                             <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
-                            <CardText>Exam Link :<a onClick={() => shell.openExternal(this.state.exams[i].formLink)} className="article">CLICK HERE</a></CardText>
+                            <CardText>Exam Link :<Button className="article" onClick={() => shell.openExternal(this.state.exams[i].formLink)} >CLICK HERE</Button></CardText>
                             
                         </Card>
                     );
@@ -88,8 +90,8 @@ class ViewExams extends Component {
                         <CardText>Exam Date : {this.state.exams[i].examDate}</CardText>
                         <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                         <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
-                        <CardText>Exam Link :<a onClick={() => shell.openExternal(this.state.exams[i].formLink)} className="article">CLICK HERE</a></CardText>
-                        <CardText>View Response : <a href= {`http://localhost:3000/faculty/viewResponse/${this.state.exams[i].examId}`} className="article">CLICK HERE</a></CardText>
+                        <CardText>Exam Link :<Button onClick={() => window.open(`${this.state.exams[i].pdf}`)} className="article" >CLICK HERE</Button></CardText>
+                        <CardText>View Response : <Button href= {`http://localhost:3000/faculty/viewResponse/${this.state.exams[i].examId}`} className="article">CLICK HERE</Button></CardText>
                     </Card>
                 );
                 }

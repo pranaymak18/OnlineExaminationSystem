@@ -5,6 +5,7 @@ const answersheet = require('../../models/AnswerSheetModels')
 const path = require('path');
 const generator = require('generate-password');
 const mainRouter = express.Router();
+const forms = require('../../models/ExamModels');
 
 mainRouter.use(bodyParser.json());
 
@@ -14,15 +15,28 @@ mainRouter.route("/")
     .post((req, res) => {
   
         let eId = req.body.id;
-       
+        let pending 
+        let countExamforms
+        let countAnswersheet
         console.log("/ "+eId);
+
+        forms.collection.find({ "exam.examId": eId}).count()
+        .then((countUserExist) => {
+            countExamforms = countUserExist - 1
+            console.log("countExamforms "+countExamforms)
+
+        })
+        
         let query = answersheet.find({"examId" : eId});
         query.exec((err,data) => {
             if(err) {
                 res.status(500);
             } else if(data.length){
+                countAnswersheet = data[0].students.length
+                pending = countExamforms - countAnswersheet
+                console.log("countAnswersheet "+pending)
                 console.log("student answersheet "+data[0].examId);
-                res.status(200).json({answers : data});
+                res.status(200).json({answers : data, pending:pending});
             }
             else{
                 console.log("data length "+data.length)
@@ -47,4 +61,26 @@ mainRouter.route("/")
             }
         })
     });
+
+   /* mainRouter.route("/countPending").post((req,res)=>{
+        let countAnswersheet
+        let countExamforms
+        answersheet.find({examId:req.body.examId  }, (err, cnt) => {
+            if(err){
+                console.log(err)
+            }
+            else{
+                countAnswersheet = cnt
+            }
+        })
+        forms.countDocuments({$and:[{: request.body.email},{}]  }, (err, cnt) => {
+            if(err){
+                console.log(err)
+            }
+            else{
+                countExamforms = cnt
+            }
+        })
+
+    })*/
 module.exports = mainRouter;

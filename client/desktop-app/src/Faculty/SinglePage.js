@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import ClipLoader from "react-spinners/ClipLoader";
+
 import axios from 'axios';
 import { Button } from "reactstrap";
 import './pdf-style.css';
@@ -37,6 +39,8 @@ export default function AllPages(props) {
     //alert("In QR");
     setCount(1);
   }
+
+ 
 
  
   return (

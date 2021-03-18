@@ -37,7 +37,7 @@ mainRouter.route("/students")
 mainRouter.route("/admins")
     .post((req, res) => {
         console.log("/admins "+ req.body.orgId)
-        let query = user.find( {  $and: [{  "role" : "admin" },{ "orgId":  req.body.orgId  } ] })
+        let query = user.find( {  $and: [{ orgId: { $eq: req.body.orgId } },{  "role" : "admin" }] })
       // let query = user.find({"role" : "admin"});
         query.exec((err,data) => {
             if(err) {

@@ -6,6 +6,14 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom';
 import { ExcelRenderer } from 'react-excel-renderer';
 import _uniqueId from 'lodash/uniqueId';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+const path = require('path');
+
+const electron = window.require('electron'); 
+
+const Notification = electron.remote.Notification; 
+
+
 const shell = window.require('electron').shell;
 const axios = require('axios');
 class CreateExam extends Component {
@@ -25,6 +33,7 @@ class CreateExam extends Component {
         this.fileHandler = this.fileHandler.bind(this);
         this.createExam = this.createExam.bind(this);
         this.onChangeValue= this.onChangeValue.bind(this);
+       
     }
 
     componentDidMount() {
@@ -118,10 +127,12 @@ class CreateExam extends Component {
 
             let reqBody = [];
             let facultyexam = [];
+            let result = false
             
             
                 //for faculty
             facultyexam.push({
+                result:true,
                 answersheet: answer,
                 email: faculty,
                 examId: this.id,
@@ -140,6 +151,7 @@ class CreateExam extends Component {
             for (let i = 1; i < this.state.rows.length; i++) {
                 if (!this.state.rows[i][0]) break;                
                 reqBody.push({
+                    resut:false,
                     answersheet: false,
                     email: this.state.rows[i][1],
                     examId: this.id,
@@ -163,9 +175,12 @@ class CreateExam extends Component {
                     showMessage: "block",
                     message: response.data.status
                 });
-
-                window.location.reload(); 
                 
+
+                
+
+              //  window.location.reload(); 
+               
                 console.log(response);
             })
             .catch(function (error) {
@@ -176,9 +191,11 @@ class CreateExam extends Component {
                     message: "Server under maintainance, try again later or contact backend team for the updates"
                 });
             });
+          
         }
     }
 
+   
     fileHandler = (event) => {
         let fileObj = event.target.files[0];
         ExcelRenderer(fileObj, (err, resp) => {
@@ -199,7 +216,53 @@ class CreateExam extends Component {
         });
     }
 
+    createNotification = (type) => {
+        return () => {
+          switch (type) {
+            case 'info':
+              NotificationManager.info(`${this.state.pending}`);
+              break;
+            case 'success':{
+              NotificationManager.success( 'Message',`${this.state.message}`);
+              const options = { 
+                title: 'Message', 
+                subtitle: 'Total', 
+                body: `${this.state.message}`, 
+                silent: false, 
+                icon: path.join(__dirname, '../assets/image.png'), 
+                hasReply: true,   
+                timeoutType: 'never',  
+                replyPlaceholder: 'Reply Here', 
+                sound: path.join(__dirname, '../assets/sound.mp3'), 
+                urgency: 'critical' ,
+                closeButtonText: 'Close Button',
+                actions: [ { 
+                    type: 'button',  
+                    text: 'Show Button'
+                }] 
+            } 
+              const customNotification = new Notification(options)
+              customNotification.show()
+              break;
+            }
+            case 'warning':
+              NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
+              break;
+            case 'error':
+              NotificationManager.error('Error message', 'Click me!', 5000, () => {
+                alert('callback');
+              });
+                  break;
+                  default:
+    
+          }
+        };
+      };
+      
+
     render() {
+        //this.createNotification('success')
+  
         
         console.log(this.state.cookie);
         let displayUploadedData = [];
@@ -216,7 +279,7 @@ class CreateExam extends Component {
         if (this.state.uploadedFlag) {
             displayUploadedData.push(
                 <div>
-                    <Table dark>
+                    <Table stripped>
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -286,9 +349,12 @@ class CreateExam extends Component {
 
         if(this.state.name==="mcq")
         {
+            
             displayUploadedData.push(
             <div>
+                
             <FormGroup>
+           
                         <Label for="formLink">Form Link</Label>
                         <Input type="url" name="formLink" id="formLink" placeholder="form link" required/>
                     </FormGroup>
@@ -308,13 +374,14 @@ class CreateExam extends Component {
                         <Label for="description">Description(Optional)</Label>
                         <Input type="text" name="description" id="description" placeholder="description" />
                     </FormGroup>
-                    <center><Button color="success" onClick={() => this.createExam()} size="lg" color="primary">Create Exam</Button></center>
+                    <center><Button color="success" onClick={() => {this.createExam()}} size="lg" color="primary">Create Exam</Button></center>
                     
                     <center>
                         <ClipLoader
                             size={50}
                             color={"#123abc"}
                             loading={this.state.showSpinner}
+                            onChange={this.createNotification('success')}
                         />
                         <p style={{ display: this.state.showMessage }}>{this.state.message}</p>
                     </center>
@@ -437,7 +504,10 @@ class CreateExam extends Component {
                                     8. Wait for sometime until exam created...<br />
                                 </p>
                             </div>
+
+                           
                         </Jumbotron>
+
 
                         <ul className="list-unstyled CTAs">
                             <li><a onClick={() => shell.openExternal("https://docs.google.com/spreadsheets/d/1qcM8cvn09nIuT2Eumr-78cn3n-aCKScUDcIzFcCVQII/edit?usp=drivesdk")} className="article">Download sample document</a></li>

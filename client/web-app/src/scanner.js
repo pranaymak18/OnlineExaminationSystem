@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import {Jumbotron} from 'reactstrap';
 import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import ClipLoader from "react-spinners/ClipLoader";
+
 export default class web extends React.Component {
     
     constructor(props) {
@@ -9,8 +11,11 @@ export default class web extends React.Component {
         this.state = {
             maile:'',
             examId:'',
-            name:''
+            name:'',
+            showspinner: false,
+            uploadedflag: false
         }
+        
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -33,7 +38,8 @@ export default class web extends React.Component {
         reader.onload = (file) => {
             this.setState({
                 pdf: file.target.result,
-                pdfName: files[0].name
+                pdfName: files[0].name,
+                uploadedflag: true
             });
         }
     }
@@ -42,11 +48,16 @@ export default class web extends React.Component {
         event.preventDefault()
 
      //   let studentname = document.getElementById("stu_name").value
+ 
 
-     if ((this.state.name === '') || (this.state.pdf === '')||(this.state.pdfName ==='') ) {
+     if ((this.state.name === '') || (this.state.uploadedflag === false) ) {
         alert("Enter All Details! ");
     }
     else{
+
+        this.setState({
+            showspinner: true
+        })
       
         let AnswerSheet ={
             examId:this.state.examId,
@@ -67,7 +78,8 @@ export default class web extends React.Component {
         this.setState(() =>( {
             maile:'',
             examId:'',
-            name:''
+            name:'',
+            showspinner: false
         }))
         Array.from(document.querySelectorAll("input")).forEach(
             input => (input.value = '')
@@ -88,6 +100,7 @@ export default class web extends React.Component {
     }
     render() {
         //alert(this.props.params);
+        
         return (
 
             <>
@@ -138,7 +151,12 @@ export default class web extends React.Component {
                     <FormGroup check row>
                         <Col>
                         {/*sm={{ size: 50, offset: 2 }}*/}
-                        <Button color="primary" size="lg" block>Submit</Button>
+                       <center><ClipLoader
+                            size={50}
+                            color={"#123abc"}
+                            loading={this.state.showspinner}
+                            
+                        > </ClipLoader> </center><Button color="primary" size="lg" block>Submit</Button>
                         </Col>
                     </FormGroup>
                     </Form>

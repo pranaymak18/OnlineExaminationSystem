@@ -20,25 +20,31 @@ export default class Pdf extends Component{
       pdf : "",
       id : data ,
       flag : false,
-      timer : true
+      timer : true,
+      pdfduration : 0
     }
     
   }
 
   componentDidMount(){
     let pdfdata;
+    let duration
     let id = this.state.id;
     alert("in written id is "+ id)
     //alert(id);
     //let r=0;
     axios.post('http://localhost:5000/app/pdf',{ id })
     .then((Data) =>  {    
-      pdfdata = Data.data.pdf ; 
+      pdfdata = Data.data.pdf.pdf ; 
+      duration = Data.data.pdf.examDuration
+
+      alert("duration " + duration)
     // encP = pdfdata.split(';base64,').pop()
       //alert("in written post "+ pdfdata )
       this.setState({ 
         pdf : pdfdata,
         flag : true,
+        pdfduration: duration*60*1000
        })
       
     })
@@ -70,7 +76,7 @@ export default class Pdf extends Component{
       <div>
         <center>
         <Timer
-            initialTime={10000}
+            initialTime={this.state.pdfduration}
             direction="backward"
             checkpoints={[
               {

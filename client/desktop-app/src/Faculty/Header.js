@@ -25,7 +25,7 @@ export default function FacultyHeader(props) {
                 <ul className="list-unstyled components">
                     <li><Link to="/faculty/viewExam">View Created Exams</Link></li>
                     <li><Link to="/faculty/createExam">Create Exam</Link></li>
-                    <li><Link to="/faculty/result">Upload Result</Link></li>
+                    <li><Link to="/faculty/uploadresult">Upload Result</Link></li>
                     <li><Link to={logout()}>Logout</Link></li>
                 </ul>
             </nav>

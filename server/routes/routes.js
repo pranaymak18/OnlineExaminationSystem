@@ -78,7 +78,7 @@ router.post('/signin', (req, res, next) => {
                 console.log(someValue[0].role)
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json({ "statusMessage": "Login Successful", "role": someValue[0].role, "email": someValue[0].email, "orgId": someValue[0].orgId});
+                res.json({ "statusMessage": "Login Successful",  "email": someValue[0].email, "role": someValue[0].role,"orgId": someValue[0].orgId});
                 ses=req.body.admin_users.status;
             }
             else {
@@ -309,11 +309,14 @@ router.post("/pdf",function (req,res) {
     query.exec((err,data) => {
         if(err) {
             res.status(500);
-        } else if(data.length) {    
-            pdf = data[0].exam[0].pdf
-            console.log("inside /pdf" + data[0].exam[0].examDescription            );
+        } else if(data.length) {   
+            
+           
+            pdf = data[0].exam[0]
+            console.log("inside /pdf " + data[0].exam[0].examDescription    +" duration "+ data[0].exam[0].examDuration        );
             
             res.status(200).json({pdf});
+            
         }
         else{
             console.log("data lenght is 0" )

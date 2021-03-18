@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import StudentHeader from './Header';
-import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem ,Button} from 'reactstrap';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom';
 const path = require('path');
@@ -149,8 +149,8 @@ class ViewExamss extends Component {
             );
         } else {
             for (let i = 0; i < this.state.exams.length; i++) {
-                let color = "info";
-                if (i % 2) color = "danger"
+                let color = "success";
+                if (i % 2) color = "warning"
                 
                     
                 showExams.push(
@@ -159,7 +159,7 @@ class ViewExamss extends Component {
                         <CardText>Exam Date : {this.state.exams[i].examDate}</CardText>
                         <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                         <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
-                        <CardText>Exam Link : <button onClick={() => this.startExam(this.state.exams[i].formLink,this.state.exams[i].examId)}>START EXAM</button></CardText>
+                        <CardText>Exam Link : <Button  color="info" onClick={() => this.startExam(this.state.exams[i].formLink,this.state.exams[i].examId)}>START EXAM</Button></CardText>
                     </Card>
                 );
               

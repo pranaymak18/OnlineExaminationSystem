@@ -120,7 +120,7 @@ class AddAdmins extends Component {
         if (this.state.uploadedFlag) {
             displayUploadedData.push(
                 <div>
-                    <Table dark>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>#</th>
