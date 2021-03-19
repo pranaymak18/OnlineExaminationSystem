@@ -19,7 +19,7 @@ export default class web extends React.Component {
             let email = temp[1].split("=")[1];
             let role = temp[2].split("=")[1];
             let orgId = temp[0].split("=")[1];
-            alert(email);
+            //alert(email);
             this.setState({
                 cookie : {
                     email : email,

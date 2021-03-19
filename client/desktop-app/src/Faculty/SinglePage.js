@@ -30,7 +30,7 @@ export default function AllPages(props) {
   })
   
 */
- alert("in singlepage-------- "+ props.pdf )
+ //alert("in singlepage-------- "+ props.pdf )
   
   //const { pdf } = props.pdf;
   

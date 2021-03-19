@@ -28,8 +28,8 @@ class ViewExams extends Component {
             },
             loader:true
         });
-        alert(document.cookie)
-        alert("in viewexam of faculty "+ email)
+      //  alert(document.cookie)
+     //   alert("in viewexam of faculty "+ email)
         let self = this;
 
         axios.post("http://localhost:5000/viewExam",{

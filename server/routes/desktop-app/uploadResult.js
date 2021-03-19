@@ -38,8 +38,23 @@ mainRouter.route("/")
                         console.log("if cnt "+cnt)
                         count = count +cnt
 
-                        res.setHeader('Content-Type', 'text/plain');
-                        res.json({"status":`Marks of ${count} student/s have been already there`})
+                        var data = {"studentEmail":body[i].email,"subjectName":body[i].subjectName,"examDate":body[i].examDate,"marks":body[i].marks};
+                        result.findOneAndUpdate(
+                            {$and:[{ examId: body[i].examId},{"students.studentEmail":body[i].email}]} , 
+                            { $set: { students: data } },
+                        ).then((data) => {
+                            console.log(body[i].email +" and data")
+                           // res.status(200).json({"status" : "marks inserted !"});
+                            //Answersheet created
+                        
+                        //  console.log(data);
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                      /*  if(i===(body.length-1)){
+                            res.setHeader('Content-Type', 'text/plain');
+                            res.json({"status":`Marks of ${count} student/s have been updated`})
+                        }*/
 
                     }
                 else{
@@ -49,7 +64,7 @@ mainRouter.route("/")
                     { $push: { students: data } },
                 ).then((data) => {
                     console.log(body[i].email +" and data")
-                    res.status(200).json({"status" : "marks inserted !"});
+                   // res.status(200).json({"status" : "marks inserted !"});
                     //Answersheet created
                    
                   //  console.log(data);
@@ -62,10 +77,16 @@ mainRouter.route("/")
 
            
            
-
            
         } catch(err) {
             res.status(500);
         }
+
+        if(count>0){
+            console.log("if "+count)
+         res.status(200).json({"status" : "marks inserted !","count":count});}
+         else if(count===0){
+             console.log("else "+count)
+         res.status(200).json({"status" : "marks inserted !"});}
     });
 module.exports = mainRouter;

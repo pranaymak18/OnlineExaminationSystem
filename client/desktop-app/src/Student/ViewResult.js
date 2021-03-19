@@ -25,7 +25,7 @@ class ViewResult extends Component {
     showMarks(examId){
 
 
-        alert("showmarks exams length"+this.state.exams.length)
+       // alert("showmarks exams length"+this.state.exams.length)
 
            
     }
@@ -45,7 +45,7 @@ class ViewResult extends Component {
                 orgId : orgId,
             },
         });
-        alert(email)
+       // alert(email)
         axios.post("http://localhost:5000/viewExam",{
             user : email
         })
@@ -120,7 +120,7 @@ class ViewResult extends Component {
         if(this.state.loader === false && this.state.finish ===true)
         {
             let data = [];
-            alert("render marks length "+this.state.marks)
+         
             
             
             for (let i = 0; i <this.state.exams.length; i++) {
@@ -152,8 +152,12 @@ class ViewResult extends Component {
             </Table>
             );
         }
-        else
+        else 
         {
+
+            //alert("render exam length "+this.state.exams.length)
+            if(this.state.loader===false)
+            renderData.push(<h2>No results found!</h2>)
 
         }
         return(

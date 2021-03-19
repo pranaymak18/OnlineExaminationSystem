@@ -15,7 +15,7 @@ export default class Pdf extends Component{
   {
     super(props);
     const { data } = props.match.params;
-    alert("examid in written.js "+data); 
+   // alert("examid in written.js "+data); 
     this.state = {
       pdf : "",
       id : data ,
@@ -30,7 +30,7 @@ export default class Pdf extends Component{
     let pdfdata;
     let duration
     let id = this.state.id;
-    alert("in written id is "+ id)
+   // alert("in written id is "+ id)
     //alert(id);
     //let r=0;
     axios.post('http://localhost:5000/app/pdf',{ id })
@@ -38,7 +38,7 @@ export default class Pdf extends Component{
       pdfdata = Data.data.pdf.pdf ; 
       duration = Data.data.pdf.examDuration
 
-      alert("duration " + duration)
+     // alert("duration " + duration)
     // encP = pdfdata.split(';base64,').pop()
       //alert("in written post "+ pdfdata )
       this.setState({ 
@@ -120,7 +120,7 @@ export default class Pdf extends Component{
     {
       let temp = document.cookie.split(";");  
       let email = temp[0].split("=")[1];
-      alert("email is "+email);
+     // alert("email is "+email);
       display.push(
         <div>
           <center>

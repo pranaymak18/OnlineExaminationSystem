@@ -4,7 +4,7 @@ function App() {
   // document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
    //document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
    //document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-   alert(document.cookie)
+   //alert(document.cookie)
   return (
     <div>
       <Login />

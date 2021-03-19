@@ -69,7 +69,7 @@ export default class Login extends Component {
                 document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-                alert("outside if "+document.cookie)
+               // alert("outside if "+document.cookie)
                 if(data.data.role==="admin") {
                     //document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     //document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -80,7 +80,7 @@ export default class Login extends Component {
                     document.cookie = 'orgId='+data.data.orgId;
                     //this.context.history.push('/admin');
                     //history.push("/admin"); 
-                    alert("login admin"+document.cookie)
+                   // alert("login admin"+document.cookie)
                     this.setState(() => ({
                        toAdminDashboard: true
                     }))
@@ -92,7 +92,7 @@ export default class Login extends Component {
                     document.cookie = 'email='+data.data.email;
                     document.cookie = 'role='+data.data.role;
                     document.cookie = 'orgId='+data.data.orgId;
-                    alert("login student"+document.cookie)
+                   // alert("login student"+document.cookie)
                     history.push("/student");  
                     this.setState(() => ({
                         toStudentDashboard: true
@@ -107,7 +107,7 @@ export default class Login extends Component {
                     document.cookie = 'orgId='+data.data.orgId;
 
 
-                    alert("login faculty"+document.cookie)
+                   // alert("login faculty"+document.cookie)
 
                     history.push("/faculty");
                     this.setState(() => ({

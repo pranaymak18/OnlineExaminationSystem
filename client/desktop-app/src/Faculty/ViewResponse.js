@@ -64,7 +64,7 @@ class ViewResponse extends Component {
         axios.post('http://localhost:5000/AnswerSheet',{ id })
         .then((Data) =>  { 
             if(Data.data.statusMessage){
-                alert(Data.data.statusMessage)
+              //  alert(Data.data.statusMessage)
             } 
            // alert( Data.data.answers[0].students[0].pdf)  
             this.setState({
@@ -80,7 +80,7 @@ class ViewResponse extends Component {
                    })
                }
                 
-            alert("answersheet "+ this.state.answersheet[0])
+          //  alert("answersheet "+ this.state.answersheet[0])
         })
     }
 
@@ -94,13 +94,13 @@ class ViewResponse extends Component {
           webPreferences: {  enableRemoteModule: true ,webSecurity: false, nodeIntegration: true } 
         });
 
-       alert("url is " + url)
+      // alert("url is " + url)
         win.loadURL(`http://localhost:3000/faculty/showanswersheet/${url}/${this.state.id}`);
     }
     
 
     download (pdf,name) {
-        alert("download")
+       // alert("download")
     const linkSource = pdf;
     const downloadLink = document.createElement("a");
     const fileName = name;

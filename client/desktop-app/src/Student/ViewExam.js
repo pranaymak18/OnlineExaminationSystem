@@ -36,7 +36,7 @@ class ViewExamss extends Component {
                 exams : ""
             },
         });
-        alert(email)
+      //  alert(email)
 
         this.setState({
             loader: true
@@ -134,14 +134,14 @@ class ViewExamss extends Component {
 
     render() {
         let showExams = [];
-        if (this.state.exams === "") {
+        if (this.state.exams === "" && this.state.loader===false) {
             showExams.push(
                 <p>
                     Failed to fetch data.
                 
                 </p>
             );
-        } else if (this.state.exams.length === 0) {
+        } else if (this.state.exams.length === 0 && this.state.loader===false) {
             showExams.push(
                 <p>
                     No exam found!

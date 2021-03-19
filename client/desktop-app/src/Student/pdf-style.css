@@ -1,24 +1,24 @@
 .react-pdf__Page {
-    margin-top: 10px;
-  }
-  .react-pdf__Page__textContent {
-    border: 1px solid darkgrey;
-    box-shadow: 5px 5px 5px 1px #ccc;
-    border-radius: 5px;
-  }
-  
-  .react-pdf__Page__annotations.annotationLayer {
-    padding: 0px;
-  }
-  
-  .react-pdf__Page__canvas {
-    margin: 0 auto;
-  }
-  
-  /* For all pages */
-  .all-page-container {
-    height: 100%;
-    width: 100%;
-    max-height: 600px;
-    overflow: auto;
-  }
+  margin-top: 10px;
+}
+.react-pdf_Page_textContent {
+  border: 1px solid darkgrey;
+  box-shadow: 5px 5px 5px 1px #ccc;
+  border-radius: 5px;
+}
+
+.react-pdf_Page_annotations.annotationLayer {
+  padding: 0px;
+}
+
+.react-pdf_Page_canvas {
+  margin: 0 auto;
+}
+
+/* For all pages */
+.all-page-container {
+  height: 100%;
+  width: 100%;
+  max-height: 0px;
+  overflow: auto;
+}

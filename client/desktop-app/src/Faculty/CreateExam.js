@@ -28,13 +28,19 @@ class CreateExam extends Component {
             message: "",
             cookie: "",
             name:"",
+            notify:false,
+            count:0
+            
         }
+        
         
         this.fileHandler = this.fileHandler.bind(this);
         this.createExam = this.createExam.bind(this);
         this.onChangeValue= this.onChangeValue.bind(this);
-       
+        this.notification = this.notification.bind(this)
+        
     }
+    
 
     componentDidMount() {
         let temp = document.cookie.split("; ");
@@ -94,7 +100,7 @@ class CreateExam extends Component {
         
         this.id = uuid();
         let faculty=  this.state.cookie.email;
-        alert("faculty is "+faculty+" this.id = "+this.id)
+       // alert("faculty is "+faculty+" this.id = "+this.id)
         
         
         let sbj = document.getElementById("subjectName").value;
@@ -103,14 +109,14 @@ class CreateExam extends Component {
         let des = document.getElementById("description").value;
         let formURL
         let answer =true
-        alert(this.state.name)
+       // alert(this.state.name)
         if(this.state.name === "mcq")
         {
          formURL = document.getElementById("formLink").value;
          answer=false
             
         }
-        else if(this.state.name = "written"){
+        else if(this.state.name === "written"){
             formURL ="No mcq"
         }
       
@@ -118,12 +124,15 @@ class CreateExam extends Component {
         if(!formURL || !sbj || !date || !dur) {
             alert("Please enter the exam data correctly !");
         } else {
-            alert("success");
+          //  alert("success "+this.state.count);
             this.setState({
                 showSpinner: true,
                 showMessage: "none",
-                message: ""
+                message: "",
+                notify:false
+                
             });
+            
 
             let reqBody = [];
             let facultyexam = [];
@@ -165,21 +174,24 @@ class CreateExam extends Component {
                 });
             }
             var self = this;
+            this.state.count++
             axios.post('http://localhost:5000/createExam', {
                 users: reqBody
             })
             .then(function (response) {
+                //alert("then called ")
+               
                 console.log(self.state);
                 self.setState({
                     showSpinner: false,
                     showMessage: "block",
-                    message: response.data.status
-                });
+                    message: response.data.status,
+                    notify:true,   
+                    
+                    
+                });             
                 
-
-                
-
-              //  window.location.reload(); 
+                window.location.reload();                 
                
                 console.log(response);
             })
@@ -193,6 +205,8 @@ class CreateExam extends Component {
             });
           
         }
+
+        
     }
 
    
@@ -215,53 +229,45 @@ class CreateExam extends Component {
             }
         });
     }
-
-    createNotification = (type) => {
-        return () => {
-          switch (type) {
-            case 'info':
-              NotificationManager.info(`${this.state.pending}`);
-              break;
-            case 'success':{
-              NotificationManager.success( 'Message',`${this.state.message}`);
-              const options = { 
-                title: 'Message', 
-                subtitle: 'Total', 
-                body: `${this.state.message}`, 
-                silent: false, 
-                icon: path.join(__dirname, '../assets/image.png'), 
-                hasReply: true,   
-                timeoutType: 'never',  
-                replyPlaceholder: 'Reply Here', 
-                sound: path.join(__dirname, '../assets/sound.mp3'), 
-                urgency: 'critical' ,
-                closeButtonText: 'Close Button',
-                actions: [ { 
-                    type: 'button',  
-                    text: 'Show Button'
-                }] 
-            } 
-              const customNotification = new Notification(options)
-              customNotification.show()
-              break;
-            }
-            case 'warning':
-              NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
-              break;
-            case 'error':
-              NotificationManager.error('Error message', 'Click me!', 5000, () => {
-                alert('callback');
-              });
-                  break;
-                  default:
     
-          }
-        };
-      };
+
+     
+      notification=()=>{
+
+        this.state.count--
+        
+       
+      
+        
+        const options = { 
+            title: 'Message', 
+            subtitle: 'Total', 
+            body: `${this.state.message}`, 
+            silent: false, 
+            icon: path.join(__dirname, '../assets/image.png'), 
+            hasReply: true,   
+            timeoutType: 'never',  
+            replyPlaceholder: 'Reply Here', 
+            sound: path.join(__dirname, '../assets/sound.mp3'), 
+            urgency: 'critical' ,
+            closeButtonText: 'Close Button',
+            actions: [ { 
+                type: 'button',  
+                text: 'Show Button'
+            }] 
+        } 
+          const customNotification = new Notification(options)
+          customNotification.show()
+
+      }
       
 
     render() {
+        
         //this.createNotification('success')
+        
+      
+          
   
         
         console.log(this.state.cookie);
@@ -349,11 +355,16 @@ class CreateExam extends Component {
 
         if(this.state.name==="mcq")
         {
+           
+
+          // alert("this.state in render "+this.state.notify)
             
+          // alert(this.state.count)
             displayUploadedData.push(
             <div>
                 
             <FormGroup>
+            
            
                         <Label for="formLink">Form Link</Label>
                         <Input type="url" name="formLink" id="formLink" placeholder="form link" required/>
@@ -381,16 +392,29 @@ class CreateExam extends Component {
                             size={50}
                             color={"#123abc"}
                             loading={this.state.showSpinner}
-                            onChange={this.createNotification('success')}
+                            
                         />
-                        <p style={{ display: this.state.showMessage }}>{this.state.message}</p>
+                        <p style={{ display: this.state.showMessage }} >{this.state.message}</p>
                     </center>
             </div>
             );
+
+            if(this.state.notify===true && this.state.count===1){
+                
+                        this.notification()
+                    
+               
+            }
+        
+               
+            
         }
+        
 
         if(this.state.name==="written")
         {
+           
+            //alert("written "+ this.state.count)
             displayUploadedData.push(
             <div>
                     Upload PDF File
@@ -428,6 +452,9 @@ class CreateExam extends Component {
                     </center>
             </div>
             );
+            if(this.state.notify===true && this.state.count===1){                
+                this.notification()           
+              }
 
             
         }
@@ -479,7 +506,9 @@ class CreateExam extends Component {
                 );
             }
         return (
+            
             <Fragment>
+                
                 <div className="wrapper">
                     <FacultyHeader />
                     <div id="content">
@@ -515,6 +544,7 @@ class CreateExam extends Component {
                         </ul>
                         {displayUploadedData}
                     </div>
+                    
                 </div>
             </Fragment>
         );

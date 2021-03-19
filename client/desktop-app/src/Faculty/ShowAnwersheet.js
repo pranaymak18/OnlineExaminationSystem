@@ -15,7 +15,7 @@ export default class ShowAnswersheet extends Component{
   {
     super(props);
     const { data,examId } = props.match.params;
-    alert("email in showanswersheet.js "+ data); 
+    //alert("email in showanswersheet.js "+ data); 
     this.state = {
       pdf : "",
       id : data ,
@@ -38,7 +38,7 @@ export default class ShowAnswersheet extends Component{
       eid : this.state.examId
 
     }
-    alert("in show answersheet id is "+ getAnswersheet.eid)
+    //alert("in show answersheet id is "+ getAnswersheet.eid)
     //alert(id);
     //let r=0;
     this.setState({
@@ -54,14 +54,14 @@ export default class ShowAnswersheet extends Component{
       for(var i=0; i<Data.data.pdf.length;i++){
         if(Data.data.pdf[i].studentEmail === this.state.id)
         {
-          alert("if stuemail"+ Data.data.pdf[i].studentEmail+" pdfname "+Data.data.pdf[i].pdfName)
+         // alert("if stuemail"+ Data.data.pdf[i].studentEmail+" pdfname "+Data.data.pdf[i].pdfName)
           this.setState({
             pdf :Data.data.pdf[i].pdf,
             showSpinner:false
 
           })
           
-          alert("this.pdf forloop"+this.state.pdf)
+          //alert("this.pdf forloop"+this.state.pdf)
         }
           
         else{
@@ -82,8 +82,13 @@ export default class ShowAnswersheet extends Component{
   
   render(){
 
-
-    
+    let showpdf = []
+    if(this.state.showSpinner===false){
+        showpdf.push(
+          <AllPages pdf={this.state.pdf}  />
+        
+        )
+    }
       //alert(this.state.pdf)
    return(
         <div>
@@ -99,7 +104,7 @@ export default class ShowAnswersheet extends Component{
                         />
                        {/* <p style={{ display: this.state.showMessage }}>{this.state.message}</p>*/ }
        </center>        
-        <AllPages pdf={this.state.pdf}  />
+        {showpdf}
       </div>
       
       </div>
