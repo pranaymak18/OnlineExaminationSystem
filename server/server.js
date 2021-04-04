@@ -40,7 +40,7 @@ app.use("/createExam", createExam);
 app.use("/viewExam", viewExam);
 app.use("/AnswerSheet", answersheet);
 app.use("/UploadResult",uploadResult)
-app.use("/ViewResult",viewResult)
+app.use("/ViewResult",viewResult);
 
 app.listen(5000, () => console.log("Server is running"))
 

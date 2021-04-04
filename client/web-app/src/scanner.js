@@ -1,16 +1,92 @@
 import React from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import {Jumbotron} from 'reactstrap';
 import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import ClipLoader from "react-spinners/ClipLoader";
+
 export default class web extends React.Component {
     
     constructor(props) {
         super(props);
         this.state = {
             maile:'',
-            examId:''
+            examId:'',
+            name:'',
+            showspinner: false,
+            uploadedflag: false
         }
         
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    onChangeValue = (event) => {
+        //alert(event.target.value);
+            
+            this.setState({
+                name : event.target.value
+            })
+        }
+
+    fileUpload = e => {
+
+        let files = e.target.files
+        // console.log(files);
+
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+
+        reader.onload = (file) => {
+            this.setState({
+                pdf: file.target.result,
+                pdfName: files[0].name,
+                uploadedflag: true
+            });
+        }
+    }
+
+    handleSubmit = (event) =>{
+        event.preventDefault()
+
+     //   let studentname = document.getElementById("stu_name").value
+ 
+
+     if ((this.state.name === '') || (this.state.uploadedflag === false) ) {
+        alert("Enter All Details! ");
+    }
+    else{
+
+        this.setState({
+            showspinner: true
+        })
+      
+        let AnswerSheet ={
+            examId:this.state.examId,
+            studentName: this.state.name,
+            studentEmail: this.state.email,
+            pdf: this.state.pdf,
+            pdfName: this.state.pdfName,
+        }
+        //alert(AnswerSheet)
+
+
+    //  alert("examId "+AnswerSheet.examId+" studentName "+AnswerSheet.studentName+" studentEmail "+AnswerSheet.pdfName)
+        
+    axios.post('http://192.168.43.112:5000/app/answersheet',AnswerSheet)
+    .then( (Response)=>{
+        alert(Response.data.statusMessage)
+
+        this.setState(() =>( {
+            maile:'',
+            examId:'',
+            name:'',
+            showspinner: false
+        }))
+        Array.from(document.querySelectorAll("input")).forEach(
+            input => (input.value = '')
+        )
+    })
+}
+
     }
     
     componentDidMount() {
@@ -24,6 +100,7 @@ export default class web extends React.Component {
     }
     render() {
         //alert(this.props.params);
+        
         return (
 
             <>
@@ -47,12 +124,12 @@ export default class web extends React.Component {
                             </p> 
                     </div>
                 </Jumbotron>
-                <Form>
+                <Form onSubmit={ this.handleSubmit}>
                     <FormGroup row>
                     <Col md={6}>
                          <FormGroup>
-                         <Label for="exampleCity">Name</Label>
-                         <Input type="text" name="city" id="exampleCity"/>
+                         <Label for="Student">Name</Label>
+                         <Input type="text" name="stu_name" id="student"  onChange={this.onChangeValue}/>
                           </FormGroup>
                     </Col>
                     </FormGroup>
@@ -65,7 +142,7 @@ export default class web extends React.Component {
                     <FormGroup row>
                         <Label for="exampleFile" sm={2}>File</Label>
                         <Col sm={10}>
-                        <Input type="file" name="file" id="exampleFile" />
+                        <Input type="file" name="pdffile" id="pdf"  onChange={this.fileUpload}/>
                         <FormText color="muted">
                             Upload a file in PDF formate.
                         </FormText>
@@ -74,7 +151,12 @@ export default class web extends React.Component {
                     <FormGroup check row>
                         <Col>
                         {/*sm={{ size: 50, offset: 2 }}*/}
-                        <Button color="primary" size="lg" block>Submit</Button>
+                       <center><ClipLoader
+                            size={50}
+                            color={"#123abc"}
+                            loading={this.state.showspinner}
+                            
+                        > </ClipLoader> </center><Button color="primary" size="lg" block>Submit</Button>
                         </Col>
                     </FormGroup>
                     </Form>
