@@ -1,17 +1,16 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
-let ExamForm = new Schema({
-    email: {
+let AnswerSheet = new Schema({
+    examId: {
         type: String,
         required: true
     },
-    exam: {
+    students: {
         type: Array
-    },
-    
+    }
 
 
 }) 
 
-module.exports = mongoose.model('examform',ExamForm)
+module.exports = mongoose.model('answersheet',AnswerSheet)

@@ -8,13 +8,16 @@ const fs = require('fs');
 const { MongoClient } = require('mongodb');
 const nodemailer = require('nodemailer');
 const generator = require('generate-password');
-const forms = require('./../models/ExamModels');
+const forms = require('../models/ExamModels');
+const answersheet = require('../models/AnswerSheetModels')
 
 router.use(bodyParser.json());
 const dotenv = require('dotenv');
+const { response } = require('express');
 dotenv.config()
 
 let ses = false;
+
 
 router.post('/signup',(request,response,next)=>{
     signUpTemplateCopy.countDocuments({ email: request.body.email }, (err, cnt) => {        
@@ -37,6 +40,8 @@ router.post('/signup',(request,response,next)=>{
                 photo: request.body.photo,
                 photoName: request.body.photoName
             });
+
+
             signUpTemplateCopy.create(signedUpUser)
             // details.save()
             .then((signedUpUser) => {
@@ -44,6 +49,8 @@ router.post('/signup',(request,response,next)=>{
                 response.statusCode = 200;
                 response.setHeader('Content-Type', 'text/plain');
                 response.json({ "statusMessage": "Details Has Been Sent To The Admin. Further Instructions Will Be Sent To Given Mail Id." });
+                
+                
             }).catch((err) => next(err))
         }
     }
@@ -71,7 +78,7 @@ router.post('/signin', (req, res, next) => {
                 console.log(someValue[0].role)
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json({ "statusMessage": "Login Successful", "role": someValue[0].role, "email": someValue[0].email, "orgId": someValue[0].orgId});
+                res.json({ "statusMessage": "Login Successful",  "email": someValue[0].email, "role": someValue[0].role,"orgId": someValue[0].orgId});
                 ses=req.body.admin_users.status;
             }
             else {
@@ -249,25 +256,6 @@ router.get("/dashboard",(req, res) => {
 
     })
 
-    router.post("/pdf",function (req,res) {
-        let id = req.body.id;
-        console.log(id);
-        var query = forms.find({"exam.examId": id},{_id: 0, exam:{$elemMatch: {examId : id}}});
-        query.exec((err,data) => {
-            if(err) {
-                res.status(500);
-            } else if(data.length) {    
-                pdf = data[0].exam[0].pdf
-                console.log("inside /pdf" + data[0].exam[0].pdfName);
-                
-                res.status(200).json({pdf});
-            }
-            else{
-                console.log("data lenght is 0" )
-            }
-        })
-    })
-
     router.post("/contact",function(request, response) {
         
         let transport = nodemailer.createTransport({
@@ -313,6 +301,88 @@ router.get("/dashboard",(req, res) => {
 })
 
 
+
+router.post("/pdf",function (req,res) {
+    let id = req.body.id;
+    console.log(id);
+    var query = forms.find({"exam.examId": id},{_id: 0, exam:{$elemMatch: {examId : id}}});
+    query.exec((err,data) => {
+        if(err) {
+            res.status(500);
+        } else if(data.length) {   
+            
+           
+            pdf = data[0].exam[0]
+            console.log("inside /pdf " + data[0].exam[0].examDescription    +" duration "+ data[0].exam[0].examDuration        );
+            
+            res.status(200).json({pdf});
+            
+        }
+        else{
+            console.log("data lenght is 0" )
+        }
+    })
+})
+
+router.post("/answersheet",(req, res) => {
+        
+        let answers = req.body.examId;
+        console.log("answers "+answers)
+        
+               
+               // console.log(body[i].email)
+                answersheet.countDocuments({$and: [{"examId":req.body.examId},{"students.studentEmail":  req.body.studentEmail }]}, (err, cnt) => { 
+                    
+                if(err)
+                {
+                    consol.log(err)
+                }
+                else{
+                    if(cnt){
+                        console.log("if cnt "+cnt)
+                        res.setHeader('Content-Type', 'text/plain');
+                        res.json({"statusMessage":"Cannot upload second time"})
+
+                    }
+                else{
+                var data = {"studentEmail":req.body.studentEmail,"studentName" : req.body.studentName, "pdf" : req.body.pdf, "pdfName" : req.body.pdfName};
+                answersheet.findOneAndUpdate({ examId: req.body.examId },
+                                             { $push: { students: data } })
+                                             .then((data) => { 
+                                                    console.log(req.body.examId +" and data value of cnt = >" +cnt )
+                                                    res.json({"statusMessage":"Uploaded Successfully"})
+                                                             }).catch((err) => {console.log(err); });
+                                                                            
+                                                            }                            
+                  }
+                  })
+            
+          //  res.status(200).json({"status" : "Exam created !"});
+        
+    });
+
+    router.post("/showanswersheet",function (req,res) {
+        let id = req.body.email;
+        console.log(req.body.eid);
+        var query = answersheet.find({$and: [{"examId": req.body.eid},{"students.studentEmail": id}]});
+        query.exec((err,data) => {
+            if(err) {
+                res.status(500);
+                console.log(err)
+            } else if(data.length) {    
+               pdf = data[0].students
+                console.log("inside /showanswersheet"    );
+                
+                res.status(200).json({pdf});
+            }
+            else{
+                console.log("data lenght is 0" )
+            }
+        })
+    })
+
+
+    
 
 
 

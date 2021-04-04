@@ -43,7 +43,7 @@ export default class Pdf extends Component{
     //let r=0;
     axios.post('http://localhost:5000/app/pdf',{ id })
     .then((Data) =>  {    
-      pdfdata = Data.data.pdf ; 
+      pdfdata = Data.data.pdf.pdf ; 
     // encP = pdfdata.split(';base64,').pop()
       //alert("in written post "+ pdfdata )
       this.setState({ 
@@ -155,7 +155,9 @@ export default class Pdf extends Component{
     }
   return (
     <>
+    <div className="all-page-container">
       {display}  
+    </div>
     </>
   );
 }

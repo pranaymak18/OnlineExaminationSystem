@@ -2,7 +2,14 @@
 general 
 -------
 */
-
+.id{
+  background: blue;
+  color: pink;
+}
+.id2
+{
+  border-color: pink ;
+}
 .App {
   text-align: center;
 }

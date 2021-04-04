@@ -31,7 +31,8 @@ mainRouter.route("/")
             });
             queryData2.push({
                 "email":body[i].email,
-                "exam":[]
+                "exam":[],
+                
             })
         }
         user.collection.find({"_id" : {$in: [queryData[0].orgId]}}).count().then((data) => {
@@ -70,7 +71,9 @@ mainRouter.route("/")
                             from: process.env.gmail,
                             to: toEmail,
                             subject: 'Your Login Details',
-                            text: `Your Organization has been successfully registered with our service. Here is your temporary password ${password} & This is your Registered MailId from your Organization  ${toEmail}`
+                           // text: `Your Organization has been successfully registered with our service. Here is your temporary password ${password} & This is your Registered MailId from your Organization  ${toEmail}`
+                            html: `<html><head><style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 50%;}td, th { border: 1px solid #dddddd;text-align: left;padding: 8px;} tr:nth-child(even) {background-color: #dddddd;}</style></head><body><div><h1>Your Organization has been successfully registered with our service.</h1><br> <p style="color:red;">Your login details is provided below:</p></div><table> <tr><th>Username</th><th>Password</th></tr><tr><td>${toEmail}</td><td>${password}</td></tr></html>`
+
                         }
                         transporter.sendMail(mailOptions, (err, info) => {
                             if (err) {

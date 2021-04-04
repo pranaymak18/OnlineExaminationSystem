@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import StudentHeader from './Header';
-import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem ,Button} from 'reactstrap';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom';
+const shell = window.require('electron').shell;
 const path = require('path');
 const url = require('url');
 
@@ -23,37 +24,7 @@ class ViewExamss extends Component {
         this.startExam = this.startExam.bind(this);
     }
 
-    startExam(url1,url2) {
-        //const remote = require('electron').remote;
-        const BrowserWindow = remote.BrowserWindow;
-        const win = new BrowserWindow({
-          height: 600,
-          width: 800,
-          fullscreen : true,
-          alwaysOnTop: true,
-          webPreferences: {  enableRemoteModule: true ,webSecurity: false, nodeIntegration: true } 
-        });
-        win.setMenu(null);
-       // let data= this.state.exams[3].examId;       
-        //alert(data);
-        //win.loadFile(url);
-        if(url1 === "No mcq")
-        {
-           // alert("inside url2 "+ url2)
-            //alert(url2);
-            win.loadURL(`http://localhost:3000/scanner/${url2}/${this.state.cookie.email}`);
-        }
-       else {
-         
-        win.loadURL(url1);
-       }
-       
-        //alert('Hello');
-        
-    }
-    
     componentDidMount() {
-        //alert(document.cookie);
         let temp = document.cookie.split(";");
         let email = temp[0].split("=")[1];
         let role = temp[1].split("=")[1];
@@ -66,6 +37,7 @@ class ViewExamss extends Component {
                 exams : ""
             },
         });
+        alert(email)
 
         this.setState({
             loader: true
@@ -90,6 +62,75 @@ class ViewExamss extends Component {
             });
         })
     }
+    startExam(url1,url2) {
+        //const remote = require('electron').remote;
+        const BrowserWindow = remote.BrowserWindow;
+        const win = new BrowserWindow({
+          height: 600,
+          width: 800,
+          fullscreen : true,
+          alwaysOnTop: true,
+          webPreferences: {  enableRemoteModule: true ,webSecurity: false, nodeIntegration: true } 
+        });
+        win.setMenu(null);
+       // let data= this.state.exams[3].examId;
+       
+       shell.openExternal(`http://localhost:9000/${url2}`);
+        //alert(data);
+        //win.loadFile(url);
+        if(url1 === "No mcq")
+        {
+           // alert("inside url2 "+ url2)
+            
+            win.loadURL(`http://localhost:3000/scanner/${url2}`);
+        }
+       else {
+         
+        win.loadURL(url1);
+       }
+       
+        //alert('Hello');
+        /*
+        let constraintObj = {
+            audio: true,
+            video: true
+        }
+        navigator.mediaDevices.getUserMedia(constraintObj)
+            .then(mediaStreamObj => {
+                let mediaRecorder = new MediaRecorder(mediaStreamObj);
+                let chunks = []
+                mediaRecorder.start();
+                mediaRecorder.ondataavailable = (ev) => {
+                    chunks.push(ev.data);
+                }
+                console.log(chunks);
+                win.on('closed', () => {   
+                    mediaRecorder.stop();
+                })
+                mediaRecorder.onstop = (ev) => {
+                    let blob = new Blob(chunks, { 'type': 'video/webm' });
+                    let reader = new FileReader();
+                    reader.onload = () => {
+                        let buffer = Buffer.from (reader.result);
+                        let fileName = new Date();
+                        
+                        fs.writeFile(fileName.toDateString()+".mp4", buffer, {}, (err, res) => {
+                            if (err) {
+                                console.log('error in saving')
+                            }
+                            else {
+                                console.log('video saved')
+                            }
+                        })
+                    }
+                    reader.readAsArrayBuffer(blob);
+                    chunks = [];
+                }
+            })
+*/
+    }
+    
+    
 
     render() {
         let showExams = [];
@@ -108,17 +149,17 @@ class ViewExamss extends Component {
             );
         } else {
             for (let i = 0; i < this.state.exams.length; i++) {
-                let color = "info";
-                if (i % 2) color = "danger"
+                let color = "success";
+                if (i % 2) color = "warning"
                 
-                //alert(this.state.exams[i].examId);
+                    
                 showExams.push(
                     <Card body inverse color={color} style={{ margin: 10 }}>
                         <CardText>Subject Name : {this.state.exams[i].subjectName}</CardText>
                         <CardText>Exam Date : {this.state.exams[i].examDate}</CardText>
                         <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                         <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
-                        <CardText>Exam Link : <button onClick={() => this.startExam(this.state.exams[i].formLink,this.state.exams[i].examId)}>START EXAM</button></CardText>
+                        <CardText>Exam Link : <Button  color="info" onClick={() => this.startExam(this.state.exams[i].formLink,this.state.exams[i].examId)}>START EXAM</Button></CardText>
                     </Card>
                 );
               

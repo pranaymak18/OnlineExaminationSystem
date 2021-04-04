@@ -2,7 +2,11 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import ReactRoundedImage from "react-rounded-image";
 import MyPhoto from "./Faculty.png";
-
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import CreateIcon from '@material-ui/icons/Create';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import BackupOutlinedIcon from '@material-ui/icons/BackupOutlined';
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 export default function FacultyHeader(props) {
     return (
         <Fragment>
@@ -14,10 +18,10 @@ export default function FacultyHeader(props) {
                     </div>
                 </div>
                 <ul className="list-unstyled components">
-                    <li><Link to="/faculty/viewExam">View Created Exams</Link></li>
-                    <li><Link to="/faculty/createExam">Create Exam</Link></li>
-                    <li><Link to="/faculty/viewresult">Upload Result</Link></li>
-                    <li><Link to="/">Logout</Link></li>
+                    <li><Link to="/faculty/viewExam"><CreateIcon /> View Created Exams</Link></li>
+                    <li><Link to="/faculty/createExam"><AddCircleOutlineOutlinedIcon /> Create Exam</Link></li>
+                    <li><Link to="/faculty/viewresult"><BackupOutlinedIcon /> Upload Result</Link></li>
+                    <li><Link to="/"><ExitToAppIcon /> Logout</Link></li>
                 </ul>
             </nav>
         </Fragment>

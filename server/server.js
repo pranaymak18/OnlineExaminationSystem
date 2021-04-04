@@ -8,6 +8,9 @@ const getUsersRouter = require('./routes/desktop-app/getUsers');
 const getOrgId = require('./routes/desktop-app/getOrgId');
 const createExam = require('./routes/desktop-app/createExam');
 const viewExam = require('./routes/desktop-app/viewExam');
+const answersheet = require('./routes/desktop-app/getAnswersheet')
+const uploadResult = require('./routes/desktop-app/uploadResult')
+const viewResult = require('./routes/desktop-app/viewResult')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
@@ -22,18 +25,23 @@ const connectDB = async() => {
         
 }, ()=> console.log('Database connected'))
 }
-
+mongoose.set('useFindAndModify', false);
 
 app.use(bodyParser.json({limit: '10mb' }));
 app.use(express.urlencoded({limit: '10mb', extended: false }));
 app.use(express.json())
 app.use(cors())
+
 app.use('/app', routesUrls)
 app.use("/addUser",addUsersRouter);
 app.use("/getUsers",getUsersRouter);
 app.use("/getOrgId", getOrgId);
 app.use("/createExam", createExam);
 app.use("/viewExam", viewExam);
+app.use("/AnswerSheet", answersheet);
+app.use("/UploadResult",uploadResult)
+app.use("/ViewResult",viewResult)
+
 app.listen(5000, () => console.log("Server is running"))
 
 connectDB();
