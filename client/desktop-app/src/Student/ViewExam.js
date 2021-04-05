@@ -76,7 +76,7 @@ class ViewExamss extends Component {
         win.setMenu(null);
        // let data= this.state.exams[3].examId;
        
-       shell.openExternal(`http://localhost:9000/${url2}`);
+       shell.openExternal(`https://zoomclone.harsh31.repl.co/room/${url2}`);
        
         //alert(data);
         //win.loadFile(url);

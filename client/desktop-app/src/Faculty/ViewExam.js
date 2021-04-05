@@ -78,7 +78,7 @@ class ViewExams extends Component {
                             <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                             <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
                             <CardText>Exam Link : <Button className="article" onClick={() => shell.openExternal(this.state.exams[i].formLink)} >CLICK HERE</Button></CardText>
-                            <CardText>Enter Exam Room : <Button className="article" onClick={() => shell.openExternal(`http://localhost:9000/${this.state.exams[i].examId}`)}>CLICK HERE</Button></CardText>
+                            <CardText>Enter Exam Room : <Button className="article" onClick={() => shell.openExternal(`https://zoomclone.harsh31.repl.co/room/${this.state.exams[i].examId}`)}>CLICK HERE</Button></CardText>
                         </Card>
                     );
 
@@ -92,7 +92,7 @@ class ViewExams extends Component {
                         <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
                         <CardText>Exam Link : <Button onClick={() => window.open(`${this.state.exams[i].pdf}`)} className="article" >CLICK HERE</Button></CardText>
                         <CardText>View Response : <Button href= {`http://localhost:3000/faculty/viewResponse/${this.state.exams[i].examId}`} className="article">CLICK HERE</Button></CardText>
-                        <CardText>Enter Exam Room : <Button className="article" onClick={() => shell.openExternal(`http://localhost:9000/${this.state.exams[i].examId}`)}>CLICK HERE</Button></CardText>
+                        <CardText>Enter Exam Room : <Button className="article" onClick={() => shell.openExternal(`https://zoomclone.harsh31.repl.co/room/${this.state.exams[i].examId}`)}>CLICK HERE</Button></CardText>
                     </Card>
                 );
                 }
