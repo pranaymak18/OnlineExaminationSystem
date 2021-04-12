@@ -59,6 +59,7 @@ export default class signup extends React.Component {
     onSubmit(event) {
 
         event.preventDefault();
+      
 
         if ((this.state.firstname === '') || (this.state.lastname === '') || (this.state.email === '') ||  (this.state.university === '') || (this.state.designation === '' )) {
             alert("Enter All Details.. ");

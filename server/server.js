@@ -11,6 +11,7 @@ const viewExam = require('./routes/desktop-app/viewExam');
 const answersheet = require('./routes/desktop-app/getAnswersheet')
 const uploadResult = require('./routes/desktop-app/uploadResult')
 const viewResult = require('./routes/desktop-app/viewResult')
+const deleteExam = require('./routes/desktop-app/deleteExam')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
@@ -32,6 +33,7 @@ app.use(express.urlencoded({limit: '10mb', extended: false }));
 app.use(express.json())
 app.use(cors())
 
+app.use('/deleteExam', deleteExam);
 app.use('/app', routesUrls)
 app.use("/addUser",addUsersRouter);
 app.use("/getUsers",getUsersRouter);

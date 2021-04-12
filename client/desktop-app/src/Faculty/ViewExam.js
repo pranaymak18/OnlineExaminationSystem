@@ -1,8 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import FacultyHeader from './Header';
-import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
+import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import Button from '@material-ui/core/Button';
+import { Modal } from 'react-bootstrap';
+
+import Modals from './Modal'
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom';
+import { red } from '@material-ui/core/colors';
 const axios = require('axios');
 const shell = window.require('electron').shell;
 class ViewExams extends Component {
@@ -11,8 +16,10 @@ class ViewExams extends Component {
         this.state = {
             loader: false,
             cookie : "",
-            exams: ""
+            exams: "",
+            show: false
         }
+        this.deleteExam = this.deleteExam.bind(this)
     }
     componentDidMount() {
         let temp = document.cookie.split("; ");
@@ -50,6 +57,14 @@ class ViewExams extends Component {
         })
     }
     
+    deleteExam(props){
+
+            
+            
+           
+          }
+    
+
     render() {
         let showExams = [];
         if (this.state.exams === "" && this.state.loader===false) {
@@ -72,13 +87,15 @@ class ViewExams extends Component {
                 if(this.state.exams[i].pdfName===null){
 
                     showExams.push(
-                        <Card body inverse color={color} style={{ margin: 10 ,textDecorationColor: 'white'}}>
-                            <CardText>Subject Name : {this.state.exams[i].subjectName}</CardText>
+                        <Card body inverse color={color} style={{ margin: 10 }}>
+                           
+                            <CardText>Subject Name : {this.state.exams[i].subjectName}<CardText style={{ float:'right'}}><Modals examId = {this.state.exams[i].examId}></Modals ></CardText></CardText>
                             <CardText>Exam Date : {this.state.exams[i].examDate}</CardText>
                             <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                             <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
-                            <CardText>Exam Link :<Button className="article" onClick={() => shell.openExternal(this.state.exams[i].formLink)} >CLICK HERE</Button></CardText>
-                            
+                            <CardText>Exam Link :<Button variant="contained" color="primary" className="article" onClick={() => shell.openExternal(this.state.exams[i].formLink)} >CLICK HERE</Button></CardText>
+                            <CardText>Enter Exam Room : <Button variant="contained" color="primary" className="article" onClick={() => shell.openExternal(`https://zoomclone.harsh31.repl.co/room/${this.state.exams[i].examId}`)}>CLICK HERE</Button></CardText>
+
                         </Card>
                     );
 
@@ -86,12 +103,14 @@ class ViewExams extends Component {
                 else{
                 showExams.push(
                     <Card body inverse color={color} style={{ margin: 10 }}>
-                        <CardText>Subject Name : {this.state.exams[i].subjectName}</CardText>
+                        <CardText>Subject Name : {this.state.exams[i].subjectName}<CardText style={{ float:'right'}}><Modals examId = {this.state.exams[i].examId}></Modals ></CardText></CardText>
                         <CardText>Exam Date : {this.state.exams[i].examDate}</CardText>
                         <CardText>Exam Duration : {this.state.exams[i].examDuration}</CardText>
                         <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
-                        <CardText>Exam Link :<Button onClick={() => window.open(`${this.state.exams[i].pdf}`)} className="article" >CLICK HERE</Button></CardText>
-                        <CardText>View Response : <Button href= {`http://localhost:3000/faculty/viewResponse/${this.state.exams[i].examId}`} className="article">CLICK HERE</Button></CardText>
+                        <CardText>Exam Link :<Button variant="contained" color="primary" onClick={() => window.open(`${this.state.exams[i].pdf}`)} className="article" >CLICK HERE</Button></CardText>
+                        <CardText>View Response : <Button variant="contained" color="primary" href= {`http://localhost:3000/faculty/viewResponse/${this.state.exams[i].examId}`} className="article">CLICK HERE</Button></CardText>
+                        <CardText>Enter Exam Room : <Button variant="contained" color="primary" className="article" onClick={() => shell.openExternal(`https://zoomclone.harsh31.repl.co/room/${this.state.exams[i].examId}`)}>CLICK HERE</Button></CardText>
+
                     </Card>
                 );
                 }
@@ -113,6 +132,7 @@ class ViewExams extends Component {
                             color={"#123abc"}
                             loading={this.state.loader}
                         />
+                        
                         {showExams}
                     </div>
                 </div>

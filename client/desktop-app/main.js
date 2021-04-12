@@ -10,7 +10,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true,
   });
-  mainWindow = new BrowserWindow({ webPreferences: { webSecurity: false, nodeIntegration: true, enableRemoteModule: true } });
+  mainWindow = new BrowserWindow({ webPreferences: { webSecurity: false, nodeIntegration: true, enableRemoteModule: true },icon : './Icon.png' });
   //mainWindow.setMenu(null);
   
   mainWindow.maximize();

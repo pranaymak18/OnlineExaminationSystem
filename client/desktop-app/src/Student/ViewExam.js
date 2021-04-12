@@ -5,6 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom';
 const path = require('path');
 const url = require('url');
+const shell = window.require('electron').shell;
 
 const { remote , BrowserWindow , Menu } = window.require('electron');
  
@@ -73,6 +74,8 @@ class ViewExamss extends Component {
         });
         win.setMenu(null);
        // let data= this.state.exams[3].examId;
+       shell.openExternal(`https://zoomclone.harsh31.repl.co/room/${url2}`);
+
        
        
         //alert(data);

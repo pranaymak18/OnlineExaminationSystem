@@ -151,7 +151,8 @@ class UploadResult extends Component {
                     isFound: data.data.count                   
                    });   
                    
-                   alert("count "+this.state.isFound)
+                  // alert("count "+this.state.isFound)
+
                    
                  
                 
@@ -236,9 +237,11 @@ class UploadResult extends Component {
 
             for (let i = 0; i < this.state.exams.length; i++) {
                 showExams.push(
-                    <div>
+                    <div >
                     <Paper elevation={3} style={ {backgroundColor : '#7386D5', padding: '3px'} } >
                         <h5 style={{marginLeft : '20px', marginTop:'20px' , color : 'white'}} >Subject Name : {this.state.exams[i].subjectName}</h5>
+                        <h5 style={{marginLeft : '20px' , color : 'white'}}>Exam Description : {this.state.exams[i].examDescription} </h5>
+
                         <h5 style={{marginLeft : '20px' , color : 'white'}}>Exam Date : {this.state.exams[i].examDate} </h5>
                         <div style={{padding : '10px'}}><input type="file"  style={{ "padding": "10px"}} onChange={this.fileHandler.bind(this)}></input>
                         
