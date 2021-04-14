@@ -54,10 +54,6 @@ mainRouter.route("/")
                 })
         }
 
-
-        
-       
-        
         
         try {
            

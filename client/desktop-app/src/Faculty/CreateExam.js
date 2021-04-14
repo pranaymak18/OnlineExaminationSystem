@@ -114,7 +114,11 @@ class CreateExam extends Component {
         {
          formURL = document.getElementById("formLink").value;
          answer=false
-            
+            this.setState({
+                pdf:"",
+                pdfName:""
+            }
+            )
         }
         else if(this.state.name === "written"){
             formURL ="No mcq"
