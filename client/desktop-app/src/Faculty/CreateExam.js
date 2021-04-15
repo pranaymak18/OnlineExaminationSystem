@@ -29,7 +29,8 @@ class CreateExam extends Component {
             cookie: "",
             name:"",
             notify:false,
-            count:0
+            count:0,
+            
             
         }
         
@@ -148,7 +149,9 @@ class CreateExam extends Component {
                 result:true,
                 answersheet: answer,
                 email: faculty,
+                
                 examId: this.id,
+                type: this.state.name,
                 formLink : formURL,
                 subjectName : sbj,
                 pdf: this.state.pdf,
@@ -167,7 +170,9 @@ class CreateExam extends Component {
                     resut:false,
                     answersheet: false,
                     email: this.state.rows[i][1],
+                    
                     examId: this.id,
+                    type: this.state.name,
                     formLink : formURL,                   
                     subjectName : sbj,
                     pdf: this.state.pdf,

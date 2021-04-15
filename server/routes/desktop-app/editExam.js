@@ -12,8 +12,8 @@ mainRouter.route("/")
 .post((req, res) => {
     console.log(req.body.exam.subjectName)
     forms.updateMany({"exam.examId": req.body.exam.examId },{$set: {"exam.$": req.body.exam}}).then((data)=>{
-        console.log(data)
-        res.send({"message":"done"})
+        console.log("examforms "+data.n)
+        res.send({"message":"Exam Updated"})
     })
     
    

@@ -59,14 +59,13 @@ mainRouter.route("/")
            
             for(let i=0;i<body.length;i++) {
                 console.log(body[i].email)
-                var data = {"examId":body[i].examId ,"formLink" : body[i].formLink, "subjectName" : body[i].subjectName, "examDate" : body[i].examDate, "examDuration" : body[i].examDuration, "examDescription" : body[i].examDescription,"pdf":body[i].pdf,"pdfName":body[i].pdfName};
+                var data = {"examId":body[i].examId ,"type":body[i].type,"formLink" : body[i].formLink, "subjectName" : body[i].subjectName, "examDate" : body[i].examDate, "examDuration" : body[i].examDuration, "examDescription" : body[i].examDescription,"pdf":body[i].pdf,"pdfName":body[i].pdfName};
                 forms.findOneAndUpdate(
                     { email: body[i].email }, 
                     { $push: { exam: data } },
                 ).then((data) => {
                     console.log(body[i].email +" and data")
-                   
-                    //Answersheet created
+                    res.status(200).json({"status" : "Exam created !"});
                    
                   //  console.log(data);
                 }).catch((err) => {
@@ -77,7 +76,7 @@ mainRouter.route("/")
            
            
 
-            res.status(200).json({"status" : "Exam created !"});
+            
         } catch(err) {
             res.status(500);
         }
