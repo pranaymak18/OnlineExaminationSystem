@@ -95,7 +95,7 @@ class ViewExams extends Component {
                             <CardText>Exam Description : {this.state.exams[i].examDescription}</CardText>
                             <CardText>Exam Link :<Button variant="contained" color="primary" className="article" onClick={() => shell.openExternal(this.state.exams[i].formLink)} >CLICK HERE</Button></CardText>
                             <CardText>Enter Exam Room : <Button variant="contained" color="primary" className="article" onClick={() => shell.openExternal(`https://zoomclone.harsh31.repl.co/room/${this.state.exams[i].examId}`)}>CLICK HERE</Button></CardText>
-                            <CardText ><EditModals exam = {{type: "mcq",examId:this.state.exams[i].examId,formLink: this.state.exams[i].formLink,subjectName: this.state.exams[i].subjectName, examDate: this.state.exams[i].examDate, examDuration: this.state.exams[i].examDuration, examDescription: this.state.exams[i].examDescription, pdf: this.state.exams[i].pdf, pdfName:this.state.exams[i].pdfName }}/>     <Modals examId = {this.state.exams[i].examId}></Modals ></CardText><CardText style={{ float:'right'}}></CardText>
+                            <CardText ><EditModals exam = {{type: "mcq",examId:this.state.exams[i].examId,formLink: this.state.exams[i].formLink,subjectName: this.state.exams[i].subjectName, examDate: this.state.exams[i].examDate, examDuration: this.state.exams[i].examDuration, examDescription: this.state.exams[i].examDescription, pdf: this.state.exams[i].pdf, pdfName:this.state.exams[i].pdfName }}/>&nbsp<Modals examId = {this.state.exams[i].examId}></Modals ></CardText><CardText style={{ float:'right'}}></CardText>
                         </Card>
                     );
 

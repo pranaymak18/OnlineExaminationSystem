@@ -183,7 +183,7 @@ export default class Login extends Component {
                 <div className="text-center">
                     <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3001/signup')}>Sign Up</Button>
                     <spam className="p-2"> | </spam>
-                    <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3001/')}>Forgot Password</Button>
+                    <Button color="link" size="lg" href='/forgotpassword'>Forgot Password</Button>
                 </div>
             </>
         )
