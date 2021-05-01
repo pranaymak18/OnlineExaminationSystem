@@ -6,7 +6,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 import  {FormGroup, Label, Input} from 'reactstrap';
 import EditIcon from '@material-ui/icons/Edit';
-import { duration } from '@material-ui/core';
 const axios = require('axios');
 const path = require('path');
 const electron = window.require('electron');
@@ -47,9 +46,14 @@ export default function EditModals(props) {
    
 
     const submit = () => {
-      //  alert(exam.formLink+" "+exam.subjectName+" "+exam.examDate+" "+exam.examDuration+" "+exam.examDescription)
-
-      setSpinner(true)
+        if(exam.formLink === props.exam.formLink && exam.subjectName === props.exam.subjectName && exam.examDate ===  props.exam.examDate && exam.examDuration === props.exam.examDuration && exam.examDescription === props.exam.examDescription)
+        { 
+         // alert("nothings changed")
+          setShow( false)
+        }
+        
+        else{
+         setSpinner(true)
         axios.post('http://localhost:5000/editExam',{exam})
         .then((response)=>{     
            // alert(response.data.message);
@@ -78,7 +82,7 @@ export default function EditModals(props) {
           setShow( false)
 
         })
-        
+      }
 
     }
     const fileUpload = e => {
@@ -188,7 +192,7 @@ export default function EditModals(props) {
   
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>{props.exam.examId}</Modal.Title>
+            <Modal.Title>Edit exam</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <div>
@@ -248,7 +252,7 @@ export default function EditModals(props) {
     
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>{props.exam.examId}</Modal.Title>
+              <Modal.Title>Edit Exam</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <div>
