@@ -1,4 +1,4 @@
-import { Component, Fragment,useState } from 'react';
+import { Component, Fragment,useState,useEffect } from 'react';
 import uuid from 'react-uuid'
 import { Breadcrumb, BreadcrumbItem, Jumbotron, Table, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import ClipLoader from "react-spinners/ClipLoader";
@@ -8,6 +8,7 @@ const path = require('path');
 const electron = window.require('electron');
 const Notification = electron.remote.Notification; 
 
+
 export default function Forgotpassword(props){
 const [email,setEmail] = useState("")
 const [otp,setOtp] = useState("")
@@ -16,8 +17,19 @@ const [password,setPassword] = useState("")
 const [cfmpassword,setCfmpassword] = useState("")
 const [errorMessage,setErrorMessage] = useState("")
 const [showSpinner,setShowSpinner] = useState(false)
+const [seconds, setSeconds] = useState(0);
+
+useEffect(() => {
+    if (seconds > 0) {
+      setTimeout(() => setSeconds(seconds - 1), 1000);
+    } else {
+      
+    }
+  });
+
 const genOtp = ()=> {
   //  alert(email)
+  
     setShowSpinner(true)
     if (/^([\w\d](\.)*)+\@([\w\.]{1,2})+(\w)$/.test(email)){
     var text = "";
@@ -27,9 +39,9 @@ const genOtp = ()=> {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
   
     setOtp(text) ;
-    let mail = []
+    let mail = [];
     mail.push({
-        email: document.getElementById("email").value,
+        email: email,
         otp: text
     })
     axios.post('http://localhost:5000/forgotpassword',{details: mail})
@@ -62,6 +74,7 @@ const genOtp = ()=> {
         }
         else if(response.data.message === "OTP has sent to the given email"){
           //  alert(response.data.message)
+          setSeconds(30)
             setShowSpinner(false)
             const options = { 
                 title: 'Message', 
@@ -129,8 +142,9 @@ const otpchk=()=>{
     )
     }
     else{
-        alert("false")
-        setState("email")
+       // alert("false")
+        //setState("email")
+
         Array.from(document.querySelectorAll("Input")).forEach(
             input => (input.value = '')
     )
@@ -138,7 +152,7 @@ const otpchk=()=>{
 }
 
 const confirm = ()=>{
-   if(cfmpassword===password)
+   if(password !== "" && cfmpassword !=="" && cfmpassword===password)
    {
       
     let changepass = []
@@ -176,7 +190,7 @@ const confirm = ()=>{
     const options = { 
         title: 'Message', 
         subtitle: 'Total', 
-        body: `Passwords should be match`, 
+        body: `Passwords should be match but not empty`, 
         silent: false, 
         icon: path.join(__dirname, '../assets/image.png'), 
         hasReply: true,   
@@ -258,6 +272,8 @@ if(state === "password")
 else if(state === "otp")
 {
    // alert(email)
+   if(seconds === 0)
+     setSeconds(<Button style={{marginLeft: '4px'}} color="primary" onClick={genOtp}>Resend OTP</Button>);
     return(
         <>
                     <Form className="login-form" >
@@ -269,7 +285,8 @@ else if(state === "otp")
 
                     <FormGroup>
 
-                        <Button className="btn-lg btn-dark btn-block" onClick={otpchk}>Go</Button>
+                        <Button onClick={otpchk}>Go</Button> 
+                        &nbsp;&nbsp;{seconds}
                     </FormGroup>
                 </Form>
                     
@@ -286,10 +303,10 @@ return(
                 </FormGroup>
                
                 <FormGroup>
-                    <Button className="btn-lg btn-dark btn-block" onClick={genOtp}>Go</Button>
-                </FormGroup>
-                <FormGroup>
-                    <Button className="btn-lg btn-dark btn-block" href="/">Go to Login page</Button>
+                <Button color="warning" href="/">Go to Login page</Button>
+                    <Button style={{marginLeft: '4px'}} color="primary" onClick={genOtp}>Confirm</Button>
+                
+                   
                     <center>
                             <ClipLoader
                                 size={50}

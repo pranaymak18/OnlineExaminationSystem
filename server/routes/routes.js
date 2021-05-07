@@ -48,7 +48,7 @@ router.post('/signup',(request,response,next)=>{
                 console.log("Details entered into Database");
                 response.statusCode = 200;
                 response.setHeader('Content-Type', 'text/plain');
-                response.json({ "statusMessage": "Details Has Been Sent To The Admin. Further Instructions Will Be Sent To Given Mail Id." });
+                response.json({ "statusMessage": "success" });
                 
                 
             }).catch((err) => next(err))

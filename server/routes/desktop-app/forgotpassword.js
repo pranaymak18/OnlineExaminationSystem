@@ -42,6 +42,7 @@ mainRouter.route("/")
                                     transport.sendMail(reply, function(err,info) {
                                         if(err){
                                             console.log(err);
+                                            res.send({ "message": "Network error!" })
                                         }
                                         else{        
                                                 
@@ -57,6 +58,8 @@ mainRouter.route("/")
                         } else {
                             res.status(200).json({ "message": "Organization with this email does not exists. Please signUp." })
                         }
+                    }).catch((error)=>{
+                        res.send({ "message": "Network error!" })
                     })
            
             

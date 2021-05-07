@@ -2,12 +2,15 @@ import Axios from 'axios';
 import React from 'react';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { Modal, Button } from 'react-bootstrap';
+import FadeLoader from 'react-spinners/FadeLoader';
+
 
 export default class ShowModalCase extends React.Component {
     constructor() {
         super();
         this.state = {
-            textarea: ''
+            textarea: '',
+            spinner : false
         }
     }
 
@@ -27,12 +30,18 @@ export default class ShowModalCase extends React.Component {
         
         // alert("inside if")
         if (this.props.header === "Application Rejected") {
+            this.setState({
+                spinner : true
+            })
             Axios.post("http://localhost:5000/app/rejection", { details })
                 .then(res => {
                     alert(res.data.statusMessage);
                     this.setState({
                         textarea: ''
                     });
+                    this.setState({
+                        spinner : false
+                    })
                     window.location.reload(); 
                 })
                 .catch((err) => {
@@ -40,12 +49,18 @@ export default class ShowModalCase extends React.Component {
                 })
         }
         else {
+            this.setState({
+                spinner : true
+            })
             Axios.post("http://localhost:5000/app/confirmation", { details })
                 .then(res => {
                     alert(res.data.statusMessage);
                     this.setState({
                         textarea: ''
                     });
+                    this.setState({
+                        spinner : false
+                    })
                     window.location.reload(); 
                 })
                 .catch((err) => {
@@ -73,18 +88,21 @@ export default class ShowModalCase extends React.Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                <center><FadeLoader loading = {this.state.spinner} size={60} /></center>
                     <Form>
                         <FormGroup>
                             <Label>Any Suggestions</Label>
                             <Input type="textarea" name="textarea" onChange={this.handleInputChange} />
                         </FormGroup>
                     </Form>
+                    
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.props.onHide} >Close</Button>
                     <Button type="submit" color="primary"
                         onClick={this.sendValues}
                     >Submit</Button>
+                    
                 </Modal.Footer>
             </Modal>
         )

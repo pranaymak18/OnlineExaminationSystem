@@ -8,11 +8,17 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+import FormLabel from '@material-ui/core/FormLabel';
+
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import FadeLoader from 'react-spinners/FadeLoader';
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {Label} from 'reactstrap';
 //import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import dashboard from './dashboard';
@@ -47,7 +53,7 @@ export default class signup extends React.Component {
             firstname: '',
             lastname: '',
             email: '',
-           
+            spinner: false,
             university: '',
             designation: '',
             classes: useStyles,
@@ -62,7 +68,9 @@ export default class signup extends React.Component {
       
 
         if ((this.state.firstname === '') || (this.state.lastname === '') || (this.state.email === '') ||  (this.state.university === '') || (this.state.designation === '' )) {
-            alert("Enter All Details.. ");
+         //   alert("Enter All Details.. ");
+            NotificationManager.info('Enter All Details.','All fields are required*');
+            
         }
         else {
             if (/^([\w\d](\.)*)+\@([\w\.]{1,2})+(\w)$/.test(this.state.email) && (this.state.firstname.length >= 3) && (this.state.lastname.length >= 3) && (this.state.university.length >= 3) && (this.state.designation.length >= 2)) {
@@ -78,22 +86,47 @@ export default class signup extends React.Component {
                     photoName: this.state.photoName                
                    
                 }
-                // console.log(details)
-
+                 console.log(registered)
+                this.setState({
+                    spinner : true
+                })
                 Axios.post('http://localhost:5000/app/signup', registered)
-                .then(response =>  alert(response.data.statusMessage))
+                .then((response) =>  
+                {
+                   // alert(response.data.statusMessage)
+                    if(response.data.statusMessage === "Email Already Exist."){
+                        NotificationManager.error(response.data.statusMessage,"Sorry!");
                         this.setState({
                             firstname: '',
                             lastname: '',
                             email: '',                            
                             university: '',
                             designation: '',
+                            spinner : false
                         })
                         Array.from(document.querySelectorAll("input")).forEach(
                             input => (input.value = '')
                         )
-                        this.props.history.push('./')
-                        }
+                    }
+                    
+                    else{ 
+                        NotificationManager.success(response.data.statusMessage,"Success!");                   
+                    this.setState({
+                        firstname: '',
+                        lastname: '',
+                        email: '',                            
+                        university: '',
+                        designation: '',
+                        spinner : false
+                    })
+                    Array.from(document.querySelectorAll("input")).forEach(
+                        input => (input.value = '')
+                    )
+                  //  this.props.history.push('./')
+                    }
+                    
+                })
+            }           
         }
     } 
 
@@ -142,14 +175,19 @@ export default class signup extends React.Component {
         }
     }
 
+    handleClick = () => {
+        this.props.history.push('/')
+    };
+
     render() {
         return (
             <div>
+                
                 <Container component="main" maxWidth="xs" dark>
                     <CssBaseline />
                     <div className={this.state.classes.paper}>
-                        <Typography component="h1" variant="h5" style={{marginTop: '20%', marginBottom: '10%'}}>
-                            Register Your Organization
+                        <Typography align='center' color='primary' gutterBottom='true' display='block' component="h1" variant="h5" style={{marginTop: '20%', marginBottom: '10%'}}>
+                           Register Your Organization
                         </Typography>
                         <form className={this.state.classes.form} noValidate onSubmit={this.onSubmit}>
                             <Grid container spacing={2}>
@@ -247,11 +285,16 @@ export default class signup extends React.Component {
                                 style={{marginTop: '4%'}}
                             >
                                 Register 
+
                             </Button>
+                            <Button variant="contained" color="primary" style={{marginTop: '4%'}} onClick={this.handleClick}>Go Back</Button>
+                            
                         </form>
+                       <center> <FadeLoader loading = {this.state.spinner} /></center>
                     </div>
 
                 </Container>
+                <NotificationContainer/>
             </div>
 
             // <div style={{ flex: 1, marginLeft: '1vh' }}>

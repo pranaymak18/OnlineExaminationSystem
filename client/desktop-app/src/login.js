@@ -163,7 +163,7 @@ export default class Login extends Component {
                 <hr id="ir"></hr>
                 <p>Login to Continue...</p>
                 <p className="lead">
-                <Button color="primary" onClick={this.handleUrlRedirect('http://localhost:3001/')} >Learn More</Button>
+                <Button color="secondary" onClick={this.handleUrlRedirect('http://localhost:3001/')} >Learn More</Button>
                 </p>
             </Jumbotron>
             </div>
@@ -177,13 +177,13 @@ export default class Login extends Component {
                     <Input type="password" placeholder="Password" id="password"/>
                 </FormGroup>
                 <FormGroup>
-                    <Button className="btn-lg btn-dark btn-block">Log In</Button>
+                    <Button  className="btn-lg btn-dark btn-block">Log In</Button>
                 </FormGroup>
             </Form>
                 <div className="text-center">
-                    <Button color="link" size="lg" onClick={this.handleUrlRedirect('http://localhost:3001/signup')}>Sign Up</Button>
+                    <Button color="primary" size="lg" onClick={this.handleUrlRedirect('http://localhost:3001/signup')}>Sign Up</Button>
                     <spam className="p-2"> | </spam>
-                    <Button color="link" size="lg" href='/forgotpassword'>Forgot Password</Button>
+                    <Button color="danger" size="lg" href='/forgotpassword'>Forgot Password</Button>
                 </div>
             </>
         )
