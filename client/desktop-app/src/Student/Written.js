@@ -133,7 +133,7 @@ export default class Pdf extends Component{
           <div>
           
           <QRCode
-          value={`http://192.168.43.112:3001/scanner/${email}/${this.state.id}`}
+          value={`http://192.168.0.105:3001/scanner/${email}/${this.state.id}`}
           size={128}
           bgColor={"#ffffff"}
           fgColor={"#000000"}
@@ -149,7 +149,7 @@ export default class Pdf extends Component{
     else{
       display.push(
         <div>
-          <h1>Loding PDF...</h1>
+          <h1>Loading PDF...</h1>
         </div>
       )
     }

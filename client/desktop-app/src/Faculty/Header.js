@@ -7,14 +7,6 @@ import CreateIcon from '@material-ui/icons/Create';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BackupOutlinedIcon from '@material-ui/icons/BackupOutlined';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-
-function logout(){
-   // document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    //document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-   //document.cookie = "orgId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-   return '/' 
-}
 export default function FacultyHeader(props) {
    
     return (
@@ -30,7 +22,7 @@ export default function FacultyHeader(props) {
                     <li><Link to="/faculty/viewExam"><CreateIcon /> View Created Exams</Link></li>
                     <li><Link to="/faculty/createExam"><AddCircleOutlineOutlinedIcon /> Create Exam</Link></li>
                     <li><Link to="/faculty/uploadresult"><BackupOutlinedIcon /> Upload Result</Link></li>
-                    <li><Link to={logout()}><ExitToAppIcon /> Logout</Link></li>
+                    <li><Link to="/"><ExitToAppIcon /> Logout</Link></li>
                 </ul>
             </nav>
         </Fragment>

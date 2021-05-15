@@ -3,9 +3,9 @@ import StudentHeader from './Header';
 import { Card, CardText, CardTitle, Breadcrumb, BreadcrumbItem ,Button} from 'reactstrap';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom';
-const shell = window.require('electron').shell;
 const path = require('path');
 const url = require('url');
+const shell = window.require('electron').shell;
 
 const { remote , BrowserWindow , Menu } = window.require('electron');
  
@@ -70,13 +70,13 @@ class ViewExamss extends Component {
           width: 800,
           fullscreen : true,
           alwaysOnTop: true,
-          webPreferences: {  enableRemoteModule: true ,webSecurity: false, nodeIntegration: true },
-          icon : './Icon.png'
+          webPreferences: {  enableRemoteModule: true ,webSecurity: false, nodeIntegration: true } 
         });
         win.setMenu(null);
        // let data= this.state.exams[3].examId;
-       
        shell.openExternal(`https://zoomclone.harsh31.repl.co/room/${url2}`);
+
+       
        
         //alert(data);
         //win.loadFile(url);

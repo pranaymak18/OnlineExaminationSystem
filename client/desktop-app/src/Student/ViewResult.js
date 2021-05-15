@@ -80,7 +80,10 @@ class ViewResult extends Component {
                                     this.state.marks.push(response.data.result[i].students[i].marks)
                                    // alert("marks "+this.state.marks)
         
-                                }            
+                                } 
+                                else{
+                                    this.state.marks.push('0')
+                                }           
                          }
                      }
                      else

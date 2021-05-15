@@ -26,6 +26,8 @@ import HourglassEmptySharpIcon from '@material-ui/icons/HourglassEmptySharp';
 import DoneSharpIcon from '@material-ui/icons/DoneSharp';
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PropagateLoader from 'react-spinners/PropagateLoader';
+import FadeLoader from 'react-spinners/FadeLoader'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Image, Modal } from 'react-bootstrap';
 const drawerWidth = 240;
@@ -127,6 +129,7 @@ export default class dashboard extends React.Component {
             sendDetails: '',
             open: false,
             setOpen: true,
+            spinner: false,
             classes: useStyles,
             currentView: 'pending',
         }
@@ -208,12 +211,16 @@ export default class dashboard extends React.Component {
 
     acceptedReq = () => {
         this.handleDrawerClose();
+        this.setState({
+            spinner : true
+        })
         Axios.get("http://localhost:5000/app/accepted")
             .then((res) => {
                 let values = res.data;
                 this.setState({
                     userDetails: values,
-                    currentView: 'accepted'
+                    currentView: 'accepted',
+                    spinner : false
                 });
             })
             .catch((err) => console.log(err));
@@ -221,12 +228,16 @@ export default class dashboard extends React.Component {
 
     rejectedReq = () => {
         this.handleDrawerClose();
+        this.setState({
+            spinner : true
+        })
         Axios.get("http://localhost:5000/app/rejected")
             .then((res) => {
                 let values = res.data;
                 this.setState({
                     userDetails: values, 
-                    currentView: 'rejected'
+                    currentView: 'rejected',
+                    spinner : false
                 });
             })
             .catch((err) => console.log(err))
@@ -235,6 +246,9 @@ export default class dashboard extends React.Component {
     logoutReq = () => {
         this.handleDrawerClose();
         const session = false;
+        this.setState({
+            spinner : true
+        })
         Axios.get("http://localhost:5000/app/logout", {session})
             .then((res) => {
                 
@@ -245,11 +259,17 @@ export default class dashboard extends React.Component {
 
     pendingReq = () => {
         this.handleDrawerClose();
+        this.setState({
+            spinner : true
+        })
         Axios.get('http://localhost:5000/app/dashboard')
             .then((res) => {
                 if(res.data.error){
                     alert(res.data.error)
                     this.props.history.push('./admin')
+                    this.setState({
+                        spinner : false
+                    })
                     
 
                 }
@@ -258,7 +278,8 @@ export default class dashboard extends React.Component {
                 let details = [];
                 this.setState({
                     userDetails: values,
-                    currentView: 'pending'
+                    currentView: 'pending',
+                    spinner : false
                 })
             }
             })
@@ -272,11 +293,16 @@ export default class dashboard extends React.Component {
             });
         }
 
+        let showNOReg = [];
         let showData = [];
+        if(this.state.userDetails.length){
         for (let i = 0; i < this.state.userDetails.length; i++) {
             showData.push(this.renderDetails(this.state.userDetails[i], i))
         }
-
+    }
+    else if(this.state.spinner === false && this.state.userDetails.length === 0){
+        showNOReg.push(<><h3 style = {{color : 'red'}}>No new registrations!</h3></>)
+    }
         return (
             <div>
                 <CssBaseline />
@@ -371,9 +397,11 @@ export default class dashboard extends React.Component {
                         </tr>
                     </thead>
                     <tbody id="bodyid">
+                       
                         {showData}
                     </tbody>
                 </Table>
+                <center>{showNOReg}<PropagateLoader color = '#36D7B7' loading = {this.state.spinner} size={20} /></center>
 
                 <ShowModalCase
                     show={this.state.addModalShow}

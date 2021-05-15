@@ -71,7 +71,7 @@ export default class web extends React.Component {
 
     //  alert("examId "+AnswerSheet.examId+" studentName "+AnswerSheet.studentName+" studentEmail "+AnswerSheet.pdfName)
         
-    axios.post('http://192.168.43.112:5000/app/answersheet',AnswerSheet)
+    axios.post('http://192.168.0.105:5000/app/answersheet',AnswerSheet)
     .then( (Response)=>{
         alert(Response.data.statusMessage)
 

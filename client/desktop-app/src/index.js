@@ -22,6 +22,7 @@ import ViewResponse  from './Faculty/ViewResponse'
 import ShowAnswersheet from './Faculty/ShowAnwersheet'
 import UploadResult from './Faculty/UploadResult'
 import ViewResult from './Student/ViewResult'
+import Forgotpassword from './forgotpassword';
 
 
 ReactDOM.render(
@@ -47,6 +48,8 @@ ReactDOM.render(
           <Route path="/faculty/showanswersheet/:data/:examId" render={props => <ShowAnswersheet {...props} />} />
           <Route path="/faculty/uploadresult" exact component={UploadResult} />
           <Route path="/student/viewresult" exact component={ViewResult} />
+          <Route path="/forgotpassword" exact component={Forgotpassword} />
+
           <Route path="/*" exact component={ NotFound } />
           </Switch>
         </div>

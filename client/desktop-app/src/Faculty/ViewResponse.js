@@ -9,6 +9,7 @@ import { PDFDownloadLink, Text, View, StyleSheet } from '@react-pdf/renderer'
 import DownloadLink from "react-download-link";
 import history from '../history'
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 
 const path = require('path');
@@ -129,26 +130,8 @@ class ViewResponse extends Component {
               NotificationManager.info(`${this.state.pending}`);
               break;
             case 'success':{
-              NotificationManager.success( 'Pending Students',`${this.state.pending}`);
-              const options = { 
-                title: 'Pending Students', 
-                subtitle: 'Total', 
-                body: `${this.state.pending}`, 
-                silent: false, 
-                icon: path.join(__dirname, '../assets/image.png'), 
-                hasReply: true,   
-                timeoutType: 'never',  
-                replyPlaceholder: 'Reply Here', 
-                sound: path.join(__dirname, '../assets/sound.mp3'), 
-                urgency: 'critical' ,
-                closeButtonText: 'Close Button',
-                actions: [ { 
-                    type: 'button',  
-                    text: 'Show Button'
-                }] 
-            } 
-              const customNotification = new Notification(options)
-              customNotification.show()
+              NotificationManager.info( `${this.state.pending}`,'Pending Students');
+             
               break;
             }
             case 'warning':
@@ -168,27 +151,10 @@ class ViewResponse extends Component {
       
 
     render() {
-        const options = { 
-            title: 'Custom Notification', 
-            subtitle: 'Subtitle of the Notification', 
-            body: 'Body of Custom Notification', 
-            silent: false, 
-            icon: path.join(__dirname, '../assets/image.png'), 
-            hasReply: true,   
-            timeoutType: 'never',  
-            replyPlaceholder: 'Reply Here', 
-            sound: path.join(__dirname, '../assets/sound.mp3'), 
-            urgency: 'critical' ,
-            closeButtonText: 'Close Button',
-            actions: [ { 
-                type: 'button', 
-                text: 'Show Button'
-            }] 
-        } 
+       
           
         // Instantiating a new Notifications Object 
         // with custom Options 
-        const customNotification = new Notification(options); 
        
         
         
@@ -203,7 +169,7 @@ class ViewResponse extends Component {
                                 <ListGroupItem> <p>Name : {this.state.answersheet[i].studentName} </p>
                                                 <p>email : {this.state.answersheet[i].studentEmail}</p>
                                                <p> <Button inverse color="success" onClick={() => this.viewpdf(this.state.answersheet[i].studentEmail,this.state.answersheet[i].examId)}>View Answersheet</Button></p>
-                                               <p> <Button onClick={()=>this.download(this.state.answersheet[i].pdf,this.state.answersheet[i].pdfName)}><i class="fa fa-download" ></i>download</Button></p>
+                                               <p> <Button onClick={()=>this.download(this.state.answersheet[i].pdf,this.state.answersheet[i].pdfName)}><i class="fa fa-download" ></i>Download</Button></p>
                                                
                                 </ListGroupItem>
                         
@@ -230,7 +196,7 @@ class ViewResponse extends Component {
                     <div id="content">
                         <div className="row">
                             <Breadcrumb>
-                                <BreadcrumbItem><Link to="/"><i className="fa fa-home fa-sm"></i> Dashboard</Link></BreadcrumbItem>
+                                <BreadcrumbItem><Link to="/faculty"><i className="fa fa-home fa-sm"></i> Dashboard</Link></BreadcrumbItem>
                                 <BreadcrumbItem><Link to="/faculty/viewExam"><i className="fa fa-home fa-sm"></i>All Exams</Link></BreadcrumbItem>
                                 <BreadcrumbItem active> View Responses</BreadcrumbItem>
                             </Breadcrumb>

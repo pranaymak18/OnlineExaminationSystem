@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import ReactRoundedImage from "react-rounded-image";
 import MyPhoto from "./Admin.png";
@@ -6,14 +6,19 @@ import BusinessTwoToneIcon from '@material-ui/icons/BusinessTwoTone';
 import GroupAddTwoToneIcon from '@material-ui/icons/GroupAddTwoTone';
 import VisibilityTwoToneIcon from '@material-ui/icons/VisibilityTwoTone';
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
+import { Button } from "reactstrap";
 export default function AdminHeader(props) {
+    const [View, setView] = useState(false);
+    function showList(){
+        setView(true);
+    }
     return (
         <Fragment>
             <nav id="sidebar">
                 <div className="sidebar-header">
                     <h3> Admin Dashboard</h3>
                     <div style={{ display: "flex" }}>
-                        <ReactRoundedImage image={MyPhoto} hoverColor="#D1D0CE"/>
+                        <Button color="link" onClick={showList}><ReactRoundedImage image={MyPhoto} hoverColor="#D1D0CE"/></Button>
                     </div>
                 </div>
                 <ul className="list-unstyled components">
@@ -23,8 +28,9 @@ export default function AdminHeader(props) {
                     <li><Link to="/admin/display/faculties"><VisibilityTwoToneIcon/> Display Faculties</Link></li>
                     <li><Link to="/admin/display/students"><VisibilityTwoToneIcon /> Display students</Link></li>
                     <li><Link to="/admin/display/admins"><VisibilityTwoToneIcon /> Display admins</Link></li>
-                    <li><Link to="/"><ExitToAppTwoToneIcon /> Logout</Link></li>
+                    <li><Link to="/"><ExitToAppTwoToneIcon />Logout</Link></li>
                 </ul>
+
             </nav>
         </Fragment>
     );

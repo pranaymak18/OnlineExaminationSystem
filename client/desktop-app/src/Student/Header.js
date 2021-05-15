@@ -22,13 +22,13 @@ export default function StudentHeader(props) {
                 <div className="sidebar-header">
                     <h3>Student Dashboard</h3>
                     <div style={{ display: "flex" }}>
-                        <ReactRoundedImage image={MyPhoto} roundedColor="#D1D0CE" hoverColor="#4863A0" />
+                        <ReactRoundedImage image={MyPhoto} roundedColor="#9696FF" hoverColor="#CDCDCD" />
                     </div>
                 </div>
                 <ul className="list-unstyled components">
                     <li><Link to="/student/viewExam"><CreateIcon /> View Exams</Link></li>
                     <li><Link to="/student/viewresult"><VisibilityIcon /> View Result</Link></li>
-                    <li><Link to={logout()}><ExitToAppTwoToneIcon /> Logout</Link></li>
+                    <li><Link to="/"><ExitToAppTwoToneIcon /> Logout</Link></li>
                 </ul>
             </nav>
         </Fragment>
